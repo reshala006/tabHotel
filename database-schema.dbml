@@ -1,0 +1,100 @@
+Table users {
+  id serial [pk, increment]
+  email varchar(255) [unique, not null]
+  password_hash varchar(255) [not null]
+  role varchar(50) [not null, note: 'guest, admin, maid, manager']
+  first_name varchar(100) [not null]
+  last_name varchar(100) [not null]
+  phone_number varchar(20)
+  created_at timestamptz [default: `CURRENT_TIMESTAMP`]
+  updated_at timestamptz [default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    email [name: 'idx_users_email']
+    role [name: 'idx_users_role']
+  }
+}
+
+Table room_types {
+  id serial [pk, increment]
+  name varchar(100) [not null]
+  description text
+  price_per_night decimal(10, 2) [not null]
+  capacity integer [not null]
+  amenities text[] [note: 'Array of amenities: Wi-Fi, TV, etc.']
+  image_url varchar(255)
+  created_at timestamptz [default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    name [name: 'idx_room_types_name']
+  }
+}
+
+Table rooms {
+  id serial [pk, increment]
+  number varchar(10) [unique, not null]
+  floor integer [not null]
+  room_type_id integer [not null, ref: > room_types.id]
+  status varchar(50) [default: 'available', note: 'available, occupied, cleaning, maintenance']
+  created_at timestamptz [default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    number [name: 'idx_rooms_number']
+    room_type_id [name: 'idx_rooms_room_type_id']
+    status [name: 'idx_rooms_status']
+  }
+}
+
+Table bookings {
+  id serial [pk, increment]
+  guest_id integer [not null, ref: > users.id]
+  room_id integer [not null, ref: > rooms.id]
+  check_in_date date [not null]
+  check_out_date date [not null]
+  status varchar(50) [default: 'pending', note: 'pending, confirmed, checked_in, checked_out, cancelled']
+  total_price decimal(10, 2) [not null]
+  guest_data jsonb [not null, default: '{}', note: 'Snapshot of guest details at booking time']
+  notes text
+  created_at timestamptz [default: `CURRENT_TIMESTAMP`]
+  updated_at timestamptz [default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    guest_id [name: 'idx_bookings_guest_id']
+    room_id [name: 'idx_bookings_room_id']
+    (check_in_date, check_out_date) [name: 'idx_bookings_dates']
+    status [name: 'idx_bookings_status']
+    guest_data [type: gin, name: 'idx_bookings_guest_data']
+  }
+}
+
+Table payments {
+  id serial [pk, increment]
+  booking_id integer [not null, ref: > bookings.id]
+  amount decimal(10, 2) [not null]
+  status varchar(50) [default: 'pending', note: 'pending, completed, failed, refunded']
+  method varchar(50) [not null, note: 'card, cash']
+  transaction_id varchar(255)
+  created_at timestamptz [default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    booking_id [name: 'idx_payments_booking_id']
+    status [name: 'idx_payments_status']
+    transaction_id [name: 'idx_payments_transaction_id']
+  }
+}
+
+Table cleaning_logs {
+  id serial [pk, increment]
+  room_id integer [not null, ref: > rooms.id]
+  maid_id integer [ref: > users.id]
+  date date [not null, default: `CURRENT_DATE`]
+  status varchar(50) [not null, note: 'clean, dirty, in_progress']
+  notes text
+  created_at timestamptz [default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (room_id, date) [unique, name: 'uidx_cleaning_logs_room_date']
+    maid_id [name: 'idx_cleaning_logs_maid_id']
+    status [name: 'idx_cleaning_logs_status']
+  }
+}
