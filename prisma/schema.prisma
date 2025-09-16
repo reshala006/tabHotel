@@ -1,0 +1,109 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  password_hash String
+  role         String
+  first_name   String
+  last_name    String
+  phone_number String?
+  created_at   DateTime  @default(now()) @map("created_at")
+  updated_at   DateTime  @updatedAt @map("updated_at")
+
+  // Связи
+  bookings     Booking[]
+  cleaning_logs CleaningLog[]
+
+  @@map("users")
+}
+
+model RoomType {
+  id             Int      @id @default(autoincrement())
+  name           String
+  description    String?
+  price_per_night Float
+  capacity       Int
+  amenities      String[]
+  image_url      String?
+  created_at     DateTime @default(now()) @map("created_at")
+
+  rooms Room[]
+
+  @@map("room_types")
+}
+
+model Room {
+  id           Int      @id @default(autoincrement())
+  number       String   @unique
+  floor        Int
+  room_type_id Int
+  status       String   @default("available")
+  created_at   DateTime @default(now()) @map("created_at")
+
+  // Связи
+  room_type RoomType @relation(fields: [room_type_id], references: [id], onDelete: NoAction)
+  bookings  Booking[]
+  cleaning_logs CleaningLog[]
+
+  @@map("rooms")
+}
+
+model Booking {
+  id              Int      @id @default(autoincrement())
+  guest_id        Int
+  room_id         Int
+  check_in_date   DateTime
+  check_out_date  DateTime
+  status          String   @default("pending")
+  total_price     Float
+  guest_data      Json?
+  notes           String?
+  created_at      DateTime @default(now()) @map("created_at")
+  updated_at      DateTime @updatedAt @map("updated_at")
+
+  // Связи
+  guest User @relation(fields: [guest_id], references: [id], onDelete: Cascade)
+  room  Room @relation(fields: [room_id], references: [id], onDelete: Cascade)
+  payments Payment[]
+
+  @@map("bookings")
+}
+
+model Payment {
+  id             Int      @id @default(autoincrement())
+  booking_id     Int
+  amount         Float
+  status         String   @default("pending")
+  method         String
+  transaction_id String?
+  created_at     DateTime @default(now()) @map("created_at")
+
+  // Связи
+  booking Booking @relation(fields: [booking_id], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+model CleaningLog {
+  id        Int      @id @default(autoincrement())
+  room_id   Int
+  maid_id   Int?
+  date      DateTime @default(now())
+  status    String
+  notes     String?
+  created_at DateTime @default(now()) @map("created_at")
+
+  // Связи
+  room Room @relation(fields: [room_id], references: [id], onDelete: Cascade)
+  maid User? @relation(fields: [maid_id], references: [id], onDelete: SetNull)
+
+  @@map("cleaning_logs")
+}
