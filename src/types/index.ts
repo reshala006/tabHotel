@@ -24,11 +24,11 @@ export interface AuthResponse {
 }
 
 // Типы для номеров
-export interface RoomCreateRequest {
-    number: string
-    floor: number
-    roomTypeId: number
-    status?: string
+export interface RoomImage {
+    url: string
+    type: "main" | "bathroom" | "view" | "other"
+    description?: string
+    order: number
 }
 
 export interface RoomUpdateRequest {
@@ -43,6 +43,7 @@ export interface RoomResponse {
     number: string
     floor: number
     status: string
+    imageUrls: string[]
     roomType: RoomTypeResponse
     createdAt: Date
 }

@@ -1,9 +1,8 @@
 import { Response } from "express"
 import { prisma } from "../utils/prisma"
 import { AuthRequest } from "../middleware/auth"
-import { RoomCreateRequest, RoomUpdateRequest, RoomResponse, AvailabilityCheckRequest } from "../types"
+import { RoomUpdateRequest, RoomResponse, AvailabilityCheckRequest } from "../types"
 
-// Получение всех номеров
 export const getAllRooms = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
         const rooms = await prisma.room.findMany({
@@ -28,6 +27,7 @@ export const getAllRooms = async (req: AuthRequest, res: Response): Promise<void
             number: room.number,
             floor: room.floor,
             status: room.status,
+            imageUrls: room.image_urls || [], // ← ДОБАВЬТЕ ЭТУ СТРОКУ
             roomType: {
                 id: room.room_type.id,
                 name: room.room_type.name,
@@ -47,21 +47,17 @@ export const getAllRooms = async (req: AuthRequest, res: Response): Promise<void
     }
 }
 
-// Проверка доступности номеров
 export const checkAvailability = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
         const { checkInDate, checkOutDate, roomTypeId }: AvailabilityCheckRequest = req.body
 
-        // Преобразуем строки в Date объекты
         const checkIn = new Date(checkInDate)
         const checkOut = new Date(checkOutDate)
 
-        // Ищем номера, которые НЕ заняты в указанные даты
         const availableRooms = await prisma.room.findMany({
             where: {
                 ...(roomTypeId && { room_type_id: roomTypeId }),
                 status: "available",
-                // Исключаем номера с пересекающимися бронированиями
                 bookings: {
                     none: {
                         OR: [
@@ -93,6 +89,7 @@ export const checkAvailability = async (req: AuthRequest, res: Response): Promis
             number: room.number,
             floor: room.floor,
             status: room.status,
+            imageUrls: room.image_urls || [],
             roomType: {
                 id: room.room_type.id,
                 name: room.room_type.name,

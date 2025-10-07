@@ -2,11 +2,13 @@ import { Request, Response } from "express"
 import { prisma } from "../utils/prisma"
 import { hashPassword, comparePassword, generateToken } from "../utils/auth"
 import { RegisterRequest, LoginRequest, AuthResponse } from "../types"
-import { AuthRequest } from "@/middleware/auth"
+import { AuthRequest } from "../middleware/auth"
 
 export const register = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { email, password, firstName, lastName, phoneNumber, role } = req.body
+        const { email, password, firstName, lastName, phoneNumber } = req.body
+        let { role } = req.body
+        const { key } = req.body
 
         const existingUser = await prisma.user.findUnique({
             where: { email },
@@ -18,6 +20,13 @@ export const register = async (req: Request, res: Response): Promise<void> => {
         }
 
         const hashedPassword = await hashPassword(password)
+        if (role === "admin") {
+            if (key === "key") {
+                console.log("Key is correct")
+            } else {
+                role = "guest"
+            }
+        }
 
         const user = await prisma.user.create({
             data: {
@@ -26,7 +35,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
                 first_name: firstName,
                 last_name: lastName,
                 phone_number: phoneNumber,
-                role,
+                role: role,
             },
         })
 

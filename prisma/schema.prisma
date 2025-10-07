@@ -46,6 +46,7 @@ model Room {
   floor        Int
   room_type_id Int
   status       String   @default("available")
+  image_urls   String[] 
   created_at   DateTime @default(now()) @map("created_at")
 
   // Связи

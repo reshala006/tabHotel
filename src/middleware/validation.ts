@@ -8,6 +8,7 @@ export const registerSchema = z.object({
     lastName: z.string().min(1, "Last name is required"),
     phoneNumber: z.string().optional(),
     role: z.enum(["guest", "admin", "maid", "manager"]),
+    key: z.string(),
 })
 
 export const loginSchema = z.object({
