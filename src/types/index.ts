@@ -4,7 +4,7 @@ export interface RegisterRequest {
     firstName: string
     lastName: string
     phoneNumber?: string
-    role: string // 'guest', 'admin', 'maid', 'manager'
+    role?: string // 'guest', 'admin', 'maid', 'manager'
 }
 
 export interface LoginRequest {

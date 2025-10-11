@@ -3,7 +3,6 @@ import path from "path"
 import { Request } from "express"
 import fs from "fs"
 
-// Настройка хранилища для Multer
 const storage = multer.diskStorage({
     destination: (req: Request, file, cb) => {
         const roomId = req.params.roomId

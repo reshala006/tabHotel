@@ -1,0 +1,183 @@
+import { Response } from "express"
+import { prisma } from "../utils/prisma"
+import { AuthRequest } from "../middleware/auth"
+import { BookingCreateRequest, BookingResponse } from "../types"
+
+export const createBooking = async (req: AuthRequest, res: Response): Promise<void> => {
+    try {
+        const userId = req.user?.id
+        const bookingData: BookingCreateRequest = req.body
+
+        if (!userId) {
+            res.status(401).json({ message: "Not authenticated" })
+            return
+        }
+
+        const existingBooking = await prisma.booking.findFirst({
+            where: {
+                room_id: bookingData.roomId,
+                OR: [
+                    {
+                        check_in_date: { lt: new Date(bookingData.checkOutDate) },
+                        check_out_date: { gt: new Date(bookingData.checkInDate) },
+                    },
+                ],
+                status: { in: ["confirmed", "checked_in"] },
+            },
+        })
+
+        if (existingBooking) {
+            res.status(400).json({ message: "Room is not available for selected dates" })
+            return
+        }
+
+        const room = await prisma.room.findUnique({
+            where: { id: bookingData.roomId },
+            include: { room_type: true },
+        })
+
+        if (!room) {
+            res.status(404).json({ message: "Room not found" })
+            return
+        }
+
+        const checkIn = new Date(bookingData.checkInDate)
+        const checkOut = new Date(bookingData.checkOutDate)
+        const nights = Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24))
+        const totalPrice = nights * Number(room.room_type.price_per_night)
+
+        const booking = await prisma.booking.create({
+            data: {
+                guest_id: userId,
+                room_id: bookingData.roomId,
+                check_in_date: checkIn,
+                check_out_date: checkOut,
+                total_price: totalPrice,
+                guest_data: bookingData.guestData,
+                status: "confirmed",
+            },
+            include: {
+                room: {
+                    include: {
+                        room_type: true,
+                    },
+                },
+                guest: {
+                    select: {
+                        id: true,
+                        email: true,
+                        first_name: true,
+                        last_name: true,
+                    },
+                },
+            },
+        })
+
+        const response: BookingResponse = {
+            id: booking.id,
+            status: booking.status,
+            checkInDate: booking.check_in_date,
+            checkOutDate: booking.check_out_date,
+            totalPrice: Number(booking.total_price),
+            guestData: booking.guest_data,
+            room: {
+                id: booking.room.id,
+                number: booking.room.number,
+                floor: booking.room.floor,
+                status: booking.room.status,
+                imageUrls: booking.room.image_urls,
+                roomType: {
+                    id: booking.room.room_type.id,
+                    name: booking.room.room_type.name,
+                    description: booking.room.room_type.description || "",
+                    pricePerNight: Number(booking.room.room_type.price_per_night),
+                    capacity: booking.room.room_type.capacity,
+                    amenities: booking.room.room_type.amenities,
+                    imageUrl: booking.room.room_type.image_url || undefined,
+                },
+                createdAt: booking.room.created_at,
+            },
+            guest: {
+                id: booking.guest.id,
+                email: booking.guest.email,
+                firstName: booking.guest.first_name,
+                lastName: booking.guest.last_name,
+            },
+            createdAt: booking.created_at,
+        }
+
+        res.status(201).json(response)
+    } catch (error) {
+        console.error("Create booking error:", error)
+        res.status(500).json({ message: "Internal server error" })
+    }
+}
+
+export const getUserBookings = async (req: AuthRequest, res: Response): Promise<void> => {
+    try {
+        const userId = req.user?.id
+
+        if (!userId) {
+            res.status(401).json({ message: "Not authenticated" })
+            return
+        }
+
+        const bookings = await prisma.booking.findMany({
+            where: { guest_id: userId },
+            include: {
+                room: {
+                    include: {
+                        room_type: true,
+                    },
+                },
+                guest: {
+                    select: {
+                        id: true,
+                        email: true,
+                        first_name: true,
+                        last_name: true,
+                    },
+                },
+            },
+            orderBy: { created_at: "desc" },
+        })
+
+        const response: BookingResponse[] = bookings.map((booking) => ({
+            id: booking.id,
+            status: booking.status,
+            checkInDate: booking.check_in_date,
+            checkOutDate: booking.check_out_date,
+            totalPrice: Number(booking.total_price),
+            guestData: booking.guest_data,
+            room: {
+                id: booking.room.id,
+                number: booking.room.number,
+                floor: booking.room.floor,
+                status: booking.room.status,
+                imageUrls: booking.room.image_urls,
+                roomType: {
+                    id: booking.room.room_type.id,
+                    name: booking.room.room_type.name,
+                    description: booking.room.room_type.description || "",
+                    pricePerNight: Number(booking.room.room_type.price_per_night),
+                    capacity: booking.room.room_type.capacity,
+                    amenities: booking.room.room_type.amenities,
+                    imageUrl: booking.room.room_type.image_url || undefined,
+                },
+                createdAt: booking.room.created_at,
+            },
+            guest: {
+                id: booking.guest.id,
+                email: booking.guest.email,
+                firstName: booking.guest.first_name,
+                lastName: booking.guest.last_name,
+            },
+            createdAt: booking.created_at,
+        }))
+
+        res.status(200).json(response)
+    } catch (error) {
+        console.error("Get user bookings error:", error)
+        res.status(500).json({ message: "Internal server error" })
+    }
+}

@@ -6,7 +6,7 @@ import { AuthRequest } from "../middleware/auth"
 
 export const register = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { email, password, firstName, lastName, phoneNumber } = req.body
+        const { email, password, firstName, lastName, phoneNumber }: RegisterRequest = req.body
         let { role } = req.body
         const { key } = req.body
 
@@ -65,7 +65,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
 export const login = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { email, password } = req.body
+        const { email, password }: LoginRequest = req.body
 
         const user = await prisma.user.findUnique({
             where: { email },

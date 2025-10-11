@@ -63,7 +63,7 @@ export const uploadRoomImage = async (req: UploadRequest, res: Response): Promis
         res.status(200).json({
             message: "Images uploaded successfully",
             uploadedCount: files.length,
-            imageUrls: newImageUrls.slice(currentUrls.length), // только новые URL
+            imageUrls: newImageUrls.slice(currentUrls.length),
             room: {
                 id: room.id,
                 number: room.number,

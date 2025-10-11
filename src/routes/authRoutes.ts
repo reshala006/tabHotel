@@ -1,6 +1,5 @@
 import { Router } from "express"
 import { register, login, getMe } from "../controllers/authController"
-import { authenticateToken } from "../middleware/auth"
 import { validate, registerSchema, loginSchema } from "../middleware/validation"
 
 const router = Router()

@@ -9,12 +9,12 @@ router.post(
     "/rooms/:roomId",
     authenticateToken,
     requireRole(["admin", "manager"]),
-    upload.array("photos", 3),
+    upload.array("photos", 5),
     uploadRoomImage
 )
 
-router.get("/rooms/images/:roomType/:filename", getRoomImage)
+router.get("/rooms/:roomType/:filename", getRoomImage)
 
-router.delete("/rooms/:roomId/images", authenticateToken, requireRole(["admin", "manager"]), deleteRoomImage)
+router.delete("/rooms/:roomId/", authenticateToken, requireRole(["admin", "manager"]), deleteRoomImage)
 
 export default router

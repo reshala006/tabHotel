@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 import { verifyToken } from "../utils/auth"
 
+// Расширяем стандартный Request интерфейс
 export interface AuthRequest extends Request {
     user?: {
         id: number
@@ -9,32 +10,34 @@ export interface AuthRequest extends Request {
     }
 }
 
-export const authenticateToken = (req: AuthRequest, res: Response, next: NextFunction) => {
+export const authenticateToken = (req: AuthRequest, res: Response, next: NextFunction): void => {
     const authHeader = req.headers["authorization"]
     const token = authHeader && authHeader.split(" ")[1]
 
     if (!token) {
-        return res.status(401).json({ message: "Access token required" })
+        res.status(401).json({ message: "Access token required" })
+        return
     }
 
     try {
         const decoded = verifyToken(token)
-
         req.user = decoded
         next()
     } catch (error) {
-        return res.status(403).json({ message: "Invalid or expired token" })
+        res.status(403).json({ message: "Invalid or expired token" })
     }
 }
 
 export const requireRole = (roles: string[]) => {
-    return (req: AuthRequest, res: Response, next: NextFunction) => {
+    return (req: AuthRequest, res: Response, next: NextFunction): void => {
         if (!req.user) {
-            return res.status(401).json({ message: "Authentication required" })
+            res.status(401).json({ message: "Authentication required" })
+            return
         }
 
         if (!roles.includes(req.user.role)) {
-            return res.status(403).json({ message: "Insufficient permissions" })
+            res.status(403).json({ message: "Insufficient permissions" })
+            return
         }
 
         next()
