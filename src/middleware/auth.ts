@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express"
 import { verifyToken } from "../utils/auth"
 
-// Расширяем стандартный Request интерфейс
 export interface AuthRequest extends Request {
     user?: {
         id: number

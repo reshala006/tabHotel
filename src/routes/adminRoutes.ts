@@ -4,7 +4,6 @@ import { authenticateToken, requireRole } from "../middleware/auth"
 
 const router = Router()
 
-// Все роуты требуют аутентификации и роли admin/manager
 router.use(authenticateToken)
 router.use(requireRole(["admin", "manager"]))
 

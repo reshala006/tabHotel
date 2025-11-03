@@ -3,6 +3,7 @@ import { prisma } from "../utils/prisma"
 import { AuthRequest } from "../middleware/auth"
 import path from "path"
 import fs from "fs"
+import { object } from "zod"
 
 interface UploadRequest extends AuthRequest {
     file?: Express.Multer.File
@@ -26,9 +27,7 @@ export const uploadRoomImage = async (req: UploadRequest, res: Response): Promis
 
         const room = await prisma.room.findFirst({
             where: {
-                room_type: {
-                    name: roomIdentifier,
-                },
+                number: roomIdentifier,
             },
             select: { id: true, number: true, image_urls: true, room_type: true },
         })
@@ -45,7 +44,7 @@ export const uploadRoomImage = async (req: UploadRequest, res: Response): Promis
         const newImageUrls = [...currentUrls]
 
         files.forEach((file: Express.Multer.File) => {
-            const imageUrl = `/uploads/rooms/${room.room_type.name}/${file.filename}`
+            const imageUrl = `/uploads/rooms/${room.number}/${file.filename}`
             console.log("Image URL:", imageUrl)
             newImageUrls.push(imageUrl)
         })
@@ -78,9 +77,25 @@ export const uploadRoomImage = async (req: UploadRequest, res: Response): Promis
 
 export const getRoomImage = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
-        const { roomType, filename } = req.params
+        const { roomType, filename } = req.params as { roomType: string; filename: string }
 
-        const imagePath = path.join(__dirname, "../../uploads/rooms", roomType, filename)
+        const roomTypes: Record<string, string> = {
+            "economy-solo": "1",
+            "economy-solo-x2": "4",
+            "economy-duo": "7",
+
+            "comfort-solo": "10",
+            "comfort-solo-x2": "13",
+            "comfort-duo": "16",
+
+            "luxuary-solo": "19",
+            "luxuary-solo-x2": "22",
+            "luxuary-duo": "25",
+        }
+
+        const roomId = roomTypes[roomType] ?? roomType
+
+        const imagePath = path.join(__dirname, "../../uploads/rooms", roomId, filename)
 
         console.log("Looking for image at:", imagePath)
 

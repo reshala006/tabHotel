@@ -102,9 +102,9 @@ model CleaningLog {
   notes     String?
   created_at DateTime @default(now()) @map("created_at")
 
-  // Связи
-  room Room @relation(fields: [room_id], references: [id], onDelete: Cascade)
-  maid User? @relation(fields: [maid_id], references: [id], onDelete: SetNull)
+  room Room @relation(fields: [room_id], references: [id])
+  maid User? @relation(fields: [maid_id], references: [id])
 
+  @@unique([room_id, date], name: "cleaning_log_room_date")
   @@map("cleaning_logs")
 }

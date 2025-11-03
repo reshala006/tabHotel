@@ -88,6 +88,10 @@ export interface BookingResponse {
     createdAt: Date
 }
 
+export interface BookingsResponse {
+    bookings: BookingResponse[]
+}
+
 export interface AvailabilityCheckRequest {
     checkInDate: string
     checkOutDate: string

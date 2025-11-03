@@ -1,7 +1,7 @@
 import { Response } from "express"
 import { prisma } from "../utils/prisma"
 import { AuthRequest } from "../middleware/auth"
-import { BookingCreateRequest, BookingResponse } from "../types"
+import { BookingCreateRequest, BookingResponse, BookingsResponse } from "../types"
 
 export const createBooking = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
