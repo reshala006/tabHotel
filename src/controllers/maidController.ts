@@ -41,10 +41,7 @@ export const getCleaningTasks = async (req: AuthRequest, res: Response): Promise
                     },
                 },
             },
-            orderBy: [
-                { status: "asc" }, // Сначала номера со статусом cleaning
-                { number: "asc" },
-            ],
+            orderBy: [{ status: "asc" }, { number: "asc" }],
         })
 
         const tasks = rooms.map((room) => {

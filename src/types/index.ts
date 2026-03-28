@@ -23,7 +23,6 @@ export interface AuthResponse {
     token: string
 }
 
-// Типы для номеров
 export interface RoomImage {
     url: string
     type: "main" | "bathroom" | "view" | "other"
@@ -96,4 +95,6 @@ export interface AvailabilityCheckRequest {
     checkInDate: string
     checkOutDate: string
     roomTypeId?: number
+    priceFrom?: number
+    priceTo?: number
 }

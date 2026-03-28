@@ -10,8 +10,9 @@ export interface AuthRequest extends Request {
 }
 
 export const authenticateToken = (req: AuthRequest, res: Response, next: NextFunction): void => {
-    const authHeader = req.headers["authorization"]
-    const token = authHeader && authHeader.split(" ")[1]
+    const authHeader = req.cookies.authorization
+    console.log(req.cookies)
+    const token = authHeader
 
     if (!token) {
         res.status(401).json({ message: "Access token required" })

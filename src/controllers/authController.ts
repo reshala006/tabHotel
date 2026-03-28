@@ -45,6 +45,13 @@ export const register = async (req: Request, res: Response): Promise<void> => {
             role: user.role,
         })
 
+        res.cookie("authorization", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+            maxAge: 36000000,
+        })
+
         const response: AuthResponse = {
             user: {
                 id: user.id,
@@ -93,6 +100,13 @@ export const login = async (req: Request, res: Response): Promise<void> => {
             token,
         }
 
+        res.cookie("authorization", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+            maxAge: 36000000,
+        })
+
         res.status(200).json(response)
     } catch (error) {
         console.error("Login error:", error)
@@ -100,6 +114,20 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
 }
 
+export const logout = async (req: Request, res: Response): Promise<void> => {
+    try {
+        res.clearCookie("authorization", {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+        })
+
+        res.status(200).json({ message: "Logged out successfully" })
+    } catch (error) {
+        console.error("Remove token error:", error)
+        res.status(500).json({ message: "Remove token error" })
+    }
+}
 export const getMe = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
         const userId = req.user?.id
@@ -128,13 +156,11 @@ export const getMe = async (req: AuthRequest, res: Response): Promise<void> => {
         }
 
         res.status(200).json({
-            id: user.id,
             email: user.email,
             firstName: user.first_name,
             lastName: user.last_name,
             role: user.role,
             phoneNumber: user.phone_number,
-            createdAt: user.created_at,
         })
     } catch (error) {
         console.error("Get me error:", error)

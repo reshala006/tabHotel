@@ -9,16 +9,23 @@ import uploadRoutes from "./routes/uploadRoutes"
 import bookingRoutes from "./routes/bookingRoutes"
 import adminRoutes from "./routes/adminRoutes"
 import maidRoutes from "./routes/maidRoutes"
+import cookieParser from "cookie-parser"
 
 dotenv.config()
 
 const app = express()
 
+app.use(cookieParser())
 app.use(express.json())
 app.use(helmet())
-app.use(cors())
+app.use(
+    cors({
+        origin: "http://localhost:5173",
+        credentials: true,
+    }),
+)
 
-app.use("/uploads", express.static(path.join(__dirname, "../uploads")))
+// app.use("/uploads", express.static(path.join(__dirname, "../uploads")))
 
 // Routes
 app.use("/api/auth", authRoutes)

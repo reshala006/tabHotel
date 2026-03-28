@@ -27,7 +27,7 @@ export const getAllRooms = async (req: AuthRequest, res: Response): Promise<void
             number: room.number,
             floor: room.floor,
             status: room.status,
-            imageUrls: room.image_urls || [], // ← ДОБАВЬТЕ ЭТУ СТРОКУ
+            imageUrls: room.image_urls || [],
             roomType: {
                 id: room.room_type.id,
                 name: room.room_type.name,
@@ -49,7 +49,7 @@ export const getAllRooms = async (req: AuthRequest, res: Response): Promise<void
 
 export const checkAvailability = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
-        const { checkInDate, checkOutDate, roomTypeId }: AvailabilityCheckRequest = req.body
+        const { checkInDate, checkOutDate, roomTypeId, priceFrom, priceTo }: AvailabilityCheckRequest = req.body
 
         const checkIn = new Date(checkInDate)
         const checkOut = new Date(checkOutDate)
@@ -58,14 +58,20 @@ export const checkAvailability = async (req: AuthRequest, res: Response): Promis
             where: {
                 ...(roomTypeId && { room_type_id: roomTypeId }),
                 status: "available",
+                ...((priceFrom !== undefined || priceTo !== undefined) && {
+                    room_type: {
+                        ...{ price_per_night: { gte: priceFrom } },
+                        ...{ price_per_night: { lte: priceTo } },
+                    },
+                }),
                 bookings: {
                     none: {
-                        OR: [
-                            {
-                                check_in_date: { lt: checkOut },
-                                check_out_date: { gt: checkIn },
-                            },
-                        ],
+                        // OR: [
+                        // {
+                        check_in_date: { lt: checkOut },
+                        check_out_date: { gt: checkIn },
+                        // },
+                        // ],
                     },
                 },
             },
