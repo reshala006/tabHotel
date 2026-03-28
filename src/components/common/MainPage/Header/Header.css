@@ -1,0 +1,32 @@
+/* .header {} */
+
+.header__logo {
+    width: fit-content;
+    margin: clamp(100px, 40vw, 235px) auto 40px auto;
+}
+.header__logo > img {
+    width: clamp(50px, 75vw, 750px);
+}
+
+.header__welcome {
+    text-align: center;
+}
+.header__welcome__title {
+    color: var(--light-color);
+    font-size: 4.4rem;
+    margin: 0 0 40px 0;
+}
+
+/* .header__welcome__path {} */
+.header__welcome__path__title {
+    color: var(--light-color);
+    font-size: 3.2rem;
+    margin: 0 0 15px 0;
+}
+.header__welcome__path__ref {
+    font-size: 3.2rem;
+    color: #5cdbd5;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}

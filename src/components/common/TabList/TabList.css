@@ -1,0 +1,52 @@
+.tabList {
+    display: grid;
+    grid-template-areas: "title title" "fake list";
+    justify-content: flex-start;
+    position: static;
+    overflow: scroll;
+    padding: 0 0 10px 0;
+}
+.tabList__fake {
+    font-size: 5rem;
+    grid-area: fake;
+    overflow: scroll;
+    opacity: 0;
+}
+.tabList__title {
+    text-align: start;
+    font-size: 2.5rem;
+    color: var(--light-color);
+    width: fit-content;
+    grid-area: title;
+}
+.tabList__list {
+    grid-area: list;
+    display: flex;
+    /* gap: 20px; */
+    width: fit-content;
+}
+.tabList__list__items {
+    display: flex;
+    flex-direction: column;
+    font-size: 2.5rem;
+    color: var(--light-color);
+}
+.tabList__list__values {
+    font-size: 2.5rem;
+    color: var(--light-color);
+}
+.tabList__list__values,
+.tabList__list__items {
+    display: flex;
+    flex-direction: column;
+    justify-items: end;
+}
+.tabList__list__items > h2,
+.tabList__list__values > h2 {
+    width: fit-content;
+    display: block;
+}
+.tabList__list__items__box,
+.tabList__list__values__box {
+    width: fit-content;
+}

@@ -1,0 +1,13 @@
+.profile {
+    padding: 30px;
+    max-width: 1920px;
+    margin: 0 auto;
+}
+.profile__logOutBtn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px;
+    font-size: 3rem;
+    cursor: pointer;
+}

@@ -1,0 +1,56 @@
+.log {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--sky-color);
+    padding: 50px 0 50px 0;
+    min-height: 100svh;
+}
+.log__wrapper {
+    margin: 0 10px;
+    max-width: 600px;
+    width: 100%;
+}
+/* .log__wrapper__title {} */
+.log__wrapper__title > h1 {
+    font-size: 5rem;
+    color: var(--light-color);
+}
+.log__wrapper__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 10px 0 25px 0;
+}
+
+.log__wrapper__form > input {
+    font-family: "terminus";
+    font-size: 3.5rem;
+    padding: 11px 20px;
+    border: transparent;
+    color: var(--stone-color);
+}
+
+.log__wrapper__form__buttons {
+    display: flex;
+    justify-content: space-between;
+}
+.log__wrapper__form__buttons > input {
+    font-size: 3.5rem;
+    color: var(--light-color);
+    background-color: var(--water-color);
+    padding: 15px 40px;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s;
+    font-family: "terminus";
+}
+.log__wrapper__form__buttons > input:hover {
+    transform: translate(0px, 1px);
+    transition: 0.2s;
+}
+.log__wrapper__form__buttons > a {
+    font-size: 3.5rem;
+    color: var(--water-color);
+    height: fit-content;
+}

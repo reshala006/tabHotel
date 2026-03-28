@@ -1,0 +1,78 @@
+@font-face {
+    font-family: "terminus";
+    src: url("@/assets/fonts/TerminusTTF-Bold-4.49.3.ttf");
+    font-weight: 700;
+}
+:root {
+    --sky-color: #78a7ff;
+    --stone-color: #808080;
+    --light-color: #ffffff;
+    --water-color: #3f76e4;
+    --diamond-color: #5cdbd5;
+}
+
+html {
+    font-size: 62.5%; /* 10px */
+    font-weight: 700;
+    font-family: "terminus";
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    /* outline: 1px solid black; */
+}
+
+/* a {} */
+
+button {
+    font-family: "terminus";
+}
+
+body {
+    min-height: 100svh;
+    position: relative;
+    background-color: #5c8a3f;
+}
+
+@media (max-width: 1440px) {
+    html {
+        font-size: 56.25%;
+    }
+}
+
+@media (max-width: 1199px) {
+    html {
+        font-size: 50%;
+    }
+}
+
+@media (max-width: 991px) {
+    html {
+        font-size: 43.75%;
+    }
+}
+
+@media (max-width: 767px) {
+    html {
+        font-size: 37.5%;
+    }
+}
+
+@media (max-width: 575px) {
+    html {
+        font-size: 31.25%;
+    }
+}
+
+/* @media (max-width: 1440px) {} */
+
+/* @media (max-width: 1199px) {} */
+
+/* @media (max-width: 991px) {} */
+
+/* @media (max-width: 767px) {} */
+
+/* @media (max-width: 575px) {} */
