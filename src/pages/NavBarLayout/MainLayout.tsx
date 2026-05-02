@@ -1,21 +1,20 @@
 import NavBar from "@/components/common/NavBar/NavBar"
-import type posts from "@/constants/posts"
-import { useAppSelector } from "@/hooks/useTypedRedux"
+import { useAppDispatch, useAppSelector } from "@/hooks/useTypedRedux"
+import { fetchUser } from "@/store/action/user"
+import { useEffect } from "react"
 import { Outlet } from "react-router-dom"
 
 function NavBarLayout() {
     const userRole = useAppSelector((state) => state.user.user?.role)
+    const dispatch = useAppDispatch()
 
-    const getNavBarPost = (role?: string): keyof typeof posts => {
-        if (role === undefined) {
-            return "guest"
-        }
-        return role
-    }
+    useEffect(() => {
+        dispatch(fetchUser())
+    }, [dispatch])
 
     return (
         <>
-            <NavBar post={getNavBarPost(userRole)} />
+            <NavBar post={userRole ? userRole : "guest"} />
             <Outlet />
         </>
     )

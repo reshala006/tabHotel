@@ -1,0 +1,13 @@
+.staffRent {
+    padding: 70px 20px 30px 20px;
+}
+
+.staffRent__list {
+    max-width: 1700px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin: 60px auto 0 auto;
+}

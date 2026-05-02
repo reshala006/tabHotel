@@ -1,0 +1,50 @@
+.guestRentCardDetails {
+    display: flex;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 50%);
+    width: 100%;
+    height: 100svh;
+}
+.guestRentCardDetails__window {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    align-self: center;
+    max-width: 500px;
+    width: 100%;
+    height: fit-content;
+    background-color: var(--ground-light-color);
+    gap: 45px;
+    padding: 30px;
+}
+.guestRentCardDetails__window__lists {
+    display: flex;
+    gap: clamp(20px, 4vw, 35px);
+}
+.guestRentCardDetails__window__escape {
+    font-size: 2.5rem;
+    height: fit-content;
+    width: fit-content;
+    color: var(--light-color);
+    background-color: transparent;
+    border: solid 1px white;
+    padding: 25px 75px;
+    cursor: pointer;
+}
+.guestRentCardDetails__window__lists__key-list {
+    text-align: end;
+}
+
+.guestRentCardDetails__window__lists__key-list,
+.guestRentCardDetails__window__lists__value-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.guestRentCardDetails li {
+    color: var(--light-color);
+    font-size: 2.5rem;
+}

@@ -1,0 +1,9 @@
+.guestRents {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(30px, 5vw, 100px);
+    margin: 50px auto;
+    max-width: 1920px;
+    padding: 0px 20px;
+}

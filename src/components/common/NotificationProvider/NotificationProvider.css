@@ -1,0 +1,27 @@
+.notification {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(20px, -210px);
+    max-width: 200px;
+    width: 100%;
+    padding: 10px 0;
+    outline: 2px solid black;
+    font-size: 3.5rem;
+    text-align: center;
+    background-color: var(--ground-color);
+    color: var(--light-color);
+    animation: notification 2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes notification {
+    0% {
+        transform: translate(20px, -210px);
+    }
+    50% {
+        transform: translate(20px, 20px);
+    }
+    100% {
+        transform: translateY(20px, -210px);
+    }
+}

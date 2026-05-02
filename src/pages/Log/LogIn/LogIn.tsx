@@ -37,8 +37,7 @@ function Login() {
                     userData.user.role === "manager" ||
                     userData.user.role === "maid"
                 ) {
-                    // navigate("/staf")
-                    navigate("/")
+                    navigate("/profile")
                 } else {
                     navigate("/")
                 }

@@ -1,12 +1,11 @@
 const urls = {
     главная: "/",
     комнаты: "/rooms",
-    аренда: "/rent",
+    аренда: "/guest-rent",
     профиль: "/profile",
-    статистика: "/stats",
-    уборка: "/cleaning",
-    история: "/history",
-    брони: "/reservations",
+    статистика: "/admin/stats",
+    уборка: "/maid/cleaning",
+    брони: "/staff/staff-rent",
 }
 
 export default urls

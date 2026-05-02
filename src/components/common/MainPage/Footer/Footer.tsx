@@ -12,9 +12,10 @@ function Footer() {
                 <h1>ждем вас</h1>
             </div>
 
-            <div className="footer__ref">
+            <div className="footer__ref" style={{ backgroundImage: `url("src/assets/images/footer/footer.png")` }}>
                 <button
                     className="footer__ref__server"
+                    style={{ backgroundImage: "url(src/assets/images/footer/footer-stone.png)" }}
                     onClick={() => navigator.clipboard.writeText(hotelData.coordinates)}
                 >
                     {hotelData.address + " " + hotelData.coordinates}

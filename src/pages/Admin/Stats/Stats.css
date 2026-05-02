@@ -1,0 +1,27 @@
+.stats {
+    padding: clamp(20px, 5vw, 100px);
+}
+.stats__lists {
+    display: flex;
+    gap: 15px;
+    margin: 0 0 0 15%;
+}
+.stats__list-value {
+    text-align: end;
+}
+
+.stats__rooms,
+.stats__rent,
+.stats__revenue {
+    max-width: 270px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 0 0 50px 0;
+}
+
+.stats__title,
+.stats__item {
+    color: var(--light-color);
+    font-size: 3.5rem;
+}

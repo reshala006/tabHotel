@@ -1,0 +1,48 @@
+.cleaningCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid white;
+    max-width: 500px;
+    width: 100%;
+    padding: 20px;
+}
+.cleaningCard__lists {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.cleaningCard__list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.cleaningCard__list--keys {
+    align-items: end;
+}
+.cleaningCard__notes {
+    display: flex;
+}
+.cleaningCard__item,
+.cleaningCard__select {
+    font-size: 3rem;
+}
+.cleaningCard__input {
+    font-size: 2.5rem;
+}
+.cleaningCard__submit-btn {
+    display: block;
+    font-size: 3rem;
+    max-width: 290px;
+    width: 100%;
+    padding: 5% 0;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--light-color);
+    border: solid 1px white;
+}
+.cleaningCard__note-btn {
+    height: 100%;
+    cursor: pointer;
+}

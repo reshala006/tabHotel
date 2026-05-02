@@ -4,6 +4,8 @@
     font-weight: 700;
 }
 :root {
+    --ground-color: #5c8a3f;
+    --ground-light-color: #70b846;
     --sky-color: #78a7ff;
     --stone-color: #808080;
     --light-color: #ffffff;
@@ -25,8 +27,21 @@ html {
     /* outline: 1px solid black; */
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+a,
+p,
+div {
+    color: var(--light-color);
+}
 /* a {} */
-
+input,
+select,
 button {
     font-family: "terminus";
 }
@@ -50,20 +65,22 @@ body {
 }
 
 @media (max-width: 991px) {
-    html {
-        font-size: 43.75%;
-    }
+    /* html { */
+    /* font-size: 43.75%; */
+    /* } */
 }
 
 @media (max-width: 767px) {
     html {
-        font-size: 37.5%;
+        /* font-size: 37.5%; */
+        font-size: 43.75%;
     }
 }
 
 @media (max-width: 575px) {
     html {
-        font-size: 31.25%;
+        /* font-size: 31.25%; */
+        font-size: 37.5%;
     }
 }
 

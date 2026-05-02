@@ -14,7 +14,7 @@ const posts = {
     },
     maid: {
         post: "maid",
-        columns: ["уборка", "история", "профиль"],
+        columns: ["уборка", "профиль"],
     },
     manager: {
         post: "manager",
