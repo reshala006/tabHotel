@@ -9,71 +9,71 @@ interface UploadRequest extends AuthRequest {
     file?: Express.Multer.File
 }
 
-export const uploadRoomImage = async (req: UploadRequest, res: Response): Promise<void> => {
-    try {
-        console.log("Upload request received")
-        console.log("Params:", req.params)
+// export const uploadRoomImage = async (req: UploadRequest, res: Response): Promise<void> => {
+//     try {
+//         console.log("Upload request received")
+//         console.log("Params:", req.params)
 
-        const roomIdentifier = req.params.roomId
-        console.log("Room identifier:", roomIdentifier)
+//         const roomIdentifier = req.params.roomId
+//         console.log("Room identifier:", roomIdentifier)
 
-        if (!req.files || !Array.isArray(req.files) || req.files.length === 0) {
-            console.log("No files in request")
-            res.status(400).json({ message: "No files uploaded" })
-            return
-        }
+//         if (!req.files || !Array.isArray(req.files) || req.files.length === 0) {
+//             console.log("No files in request")
+//             res.status(400).json({ message: "No files uploaded" })
+//             return
+//         }
 
-        const files = req.files as Express.Multer.File[]
+//         const files = req.files as Express.Multer.File[]
 
-        const room = await prisma.room.findFirst({
-            where: {
-                number: roomIdentifier,
-            },
-            select: { id: true, number: true, image_urls: true, room_type: true },
-        })
+//         const room = await prisma.room.findFirst({
+//             where: {
+//                 number: roomIdentifier,
+//             },
+//             select: { id: true, number: true, image_urls: true, room_type: true },
+//         })
 
-        console.log("Found room:", room)
+//         console.log("Found room:", room)
 
-        if (!room) {
-            console.log("Room not found for room_type.name:", roomIdentifier)
-            res.status(404).json({ message: "Room not found" })
-            return
-        }
+//         if (!room) {
+//             console.log("Room not found for room_type.name:", roomIdentifier)
+//             res.status(404).json({ message: "Room not found" })
+//             return
+//         }
 
-        const currentUrls = room.image_urls || []
-        const newImageUrls = [...currentUrls]
+//         const currentUrls = room.image_urls || []
+//         const newImageUrls = [...currentUrls]
 
-        files.forEach((file: Express.Multer.File) => {
-            const imageUrl = `/uploads/rooms/${room.number}/${file.filename}`
-            console.log("Image URL:", imageUrl)
-            newImageUrls.push(imageUrl)
-        })
+//         files.forEach((file: Express.Multer.File) => {
+//             const imageUrl = `/uploads/rooms/${room.number}/${file.filename}`
+//             console.log("Image URL:", imageUrl)
+//             newImageUrls.push(imageUrl)
+//         })
 
-        console.log("New image URLs:", newImageUrls)
+//         console.log("New image URLs:", newImageUrls)
 
-        console.log("Updating room in database...")
-        await prisma.room.update({
-            where: { id: room.id },
-            data: { image_urls: newImageUrls },
-        })
+//         console.log("Updating room in database...")
+//         await prisma.room.update({
+//             where: { id: room.id },
+//             data: { image_urls: newImageUrls },
+//         })
 
-        console.log("Room updated successfully")
+//         console.log("Room updated successfully")
 
-        res.status(200).json({
-            message: "Images uploaded successfully",
-            uploadedCount: files.length,
-            imageUrls: newImageUrls.slice(currentUrls.length),
-            room: {
-                id: room.id,
-                number: room.number,
-                room_type: room.room_type,
-            },
-        })
-    } catch (error) {
-        console.error("Upload error details:", error)
-        res.status(500).json({ message: "Internal server error" })
-    }
-}
+//         res.status(200).json({
+//             message: "Images uploaded successfully",
+//             uploadedCount: files.length,
+//             imageUrls: newImageUrls.slice(currentUrls.length),
+//             room: {
+//                 id: room.id,
+//                 number: room.number,
+//                 room_type: room.room_type,
+//             },
+//         })
+//     } catch (error) {
+//         console.error("Upload error details:", error)
+//         res.status(500).json({ message: "Internal server error" })
+//     }
+// }
 
 export const getRoomImage = async (req: AuthRequest, res: Response): Promise<void> => {
     try {

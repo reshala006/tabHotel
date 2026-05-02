@@ -2,7 +2,7 @@ import { z } from "zod"
 
 export const bookingCreateSchema = z
     .object({
-        roomId: z.number().int().positive("Room ID must be positive"),
+        roomTypeId: z.number().int().positive("Room-type ID must be positive"),
         checkInDate: z.string().refine((date) => {
             const checkIn = new Date(date)
             const today = new Date()

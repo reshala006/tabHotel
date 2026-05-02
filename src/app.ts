@@ -20,13 +20,35 @@ app.use(express.json())
 app.use(helmet())
 app.use(
     cors({
-        origin: "http://localhost:5173",
+        origin: ["http://localhost:5173", "http://192.168.1.64:5173"],
         credentials: true,
     }),
 )
 
-// app.use("/uploads", express.static(path.join(__dirname, "../uploads")))
+app.use(
+    "/api/uploads",
+    express.static(path.join(__dirname, "../uploads"), {
+        setHeaders: (res) => {
+            res.set("cross-origin-Resource-Policy", "cross-origin")
+            res.set("Access-Control-Allow-Origin", "http://localhost:5173")
+        },
+    }),
+)
+// app.use(
+//     cors({
+//         origin: "http://localhost:5173",
+//         credentials: true,
+//     }),
+// )
 
+// app.use(
+//     "/api/uploads",
+//     express.static(path.join(__dirname, "../uploads"), {
+//         setHeaders: (res) => {
+//             res.set("cross-origin-Resource-Policy", "cross-origin")
+//         },
+//     }),
+// )
 // Routes
 app.use("/api/auth", authRoutes)
 app.use("/api/rooms", roomRoutes)

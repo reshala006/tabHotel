@@ -31,7 +31,8 @@ export interface RoomImage {
 }
 
 export interface RoomUpdateRequest {
-    number?: string
+    // number?: string
+    number?: number
     floor?: number
     roomTypeId?: number
     status?: string
@@ -39,7 +40,8 @@ export interface RoomUpdateRequest {
 
 export interface RoomResponse {
     id: number
-    number: string
+    // number: string
+    number: number
     floor: number
     status: string
     imageUrls: string[]
@@ -48,7 +50,7 @@ export interface RoomResponse {
 }
 
 export interface RoomTypeResponse {
-    id: number
+    // id: number
     name: string
     description: string
     pricePerNight: number
@@ -58,8 +60,12 @@ export interface RoomTypeResponse {
 }
 
 // Типы для бронирований
-export interface BookingCreateRequest {
+export interface BookingDataRequest {
     roomId: number
+    guestId: number
+}
+export interface BookingCreateRequest {
+    roomTypeId: number
     checkInDate: string
     checkOutDate: string
     guestData?: {

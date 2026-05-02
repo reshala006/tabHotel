@@ -60,18 +60,16 @@ export const checkAvailability = async (req: AuthRequest, res: Response): Promis
                 status: "available",
                 ...((priceFrom !== undefined || priceTo !== undefined) && {
                     room_type: {
-                        ...{ price_per_night: { gte: priceFrom } },
-                        ...{ price_per_night: { lte: priceTo } },
+                        price_per_night: {
+                            ...(priceFrom !== undefined && { gte: priceFrom }),
+                            ...(priceTo !== undefined && { lte: priceTo }),
+                        },
                     },
                 }),
                 bookings: {
                     none: {
-                        // OR: [
-                        // {
                         check_in_date: { lt: checkOut },
                         check_out_date: { gt: checkIn },
-                        // },
-                        // ],
                     },
                 },
             },
@@ -79,34 +77,13 @@ export const checkAvailability = async (req: AuthRequest, res: Response): Promis
                 room_type: {
                     select: {
                         id: true,
-                        name: true,
-                        description: true,
-                        price_per_night: true,
-                        capacity: true,
-                        amenities: true,
-                        image_url: true,
                     },
                 },
             },
         })
 
-        const response: RoomResponse[] = availableRooms.map((room) => ({
-            id: room.id,
-            number: room.number,
-            floor: room.floor,
-            status: room.status,
-            imageUrls: room.image_urls || [],
-            roomType: {
-                id: room.room_type.id,
-                name: room.room_type.name,
-                description: room.room_type.description || "",
-                pricePerNight: Number(room.room_type.price_per_night),
-                capacity: room.room_type.capacity,
-                amenities: room.room_type.amenities,
-                imageUrl: room.room_type.image_url || undefined,
-            },
-            createdAt: room.created_at,
-        }))
+        const response: number[] = availableRooms.map((rooms) => rooms.room_type.id)
+        console.log(response)
 
         res.status(200).json(response)
     } catch (error) {

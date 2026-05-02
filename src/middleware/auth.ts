@@ -11,7 +11,6 @@ export interface AuthRequest extends Request {
 
 export const authenticateToken = (req: AuthRequest, res: Response, next: NextFunction): void => {
     const authHeader = req.cookies.authorization
-    console.log(req.cookies)
     const token = authHeader
 
     if (!token) {

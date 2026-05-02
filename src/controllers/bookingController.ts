@@ -1,7 +1,7 @@
 import { Response } from "express"
 import { prisma } from "../utils/prisma"
 import { AuthRequest } from "../middleware/auth"
-import { BookingCreateRequest, BookingResponse } from "../types"
+import { BookingCreateRequest, BookingDataRequest, BookingResponse } from "../types"
 
 export const createBooking = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
@@ -13,10 +13,10 @@ export const createBooking = async (req: AuthRequest, res: Response): Promise<vo
             return
         }
 
-        const existingBooking = await prisma.booking.findFirst({
+        let existingBookings: { room_id: number }[] | number[] = await prisma.booking.findMany({
             where: {
-                room_id: bookingData.roomId,
-                OR: [
+                room_type_id: bookingData.roomTypeId,
+                AND: [
                     {
                         check_in_date: { lt: new Date(bookingData.checkOutDate) },
                         check_out_date: { gt: new Date(bookingData.checkInDate) },
@@ -24,18 +24,41 @@ export const createBooking = async (req: AuthRequest, res: Response): Promise<vo
                 ],
                 status: { in: ["confirmed", "checked_in"] },
             },
+            select: { room_id: true },
         })
 
-        if (existingBooking) {
-            res.status(400).json({ message: "Room is not available for selected dates" })
+        existingBookings = existingBookings.map((booking) => booking.room_id)
+
+        if (existingBookings.length === 3) {
+            res.status(409).json({ message: "All room in not available for selected dates" })
             return
         }
+        // if (existingBooking) {
+        //     res.status(400).json({ message: "Room is not available for selected dates" })
+        //     return
+        // }
 
-        const room = await prisma.room.findUnique({
-            where: { id: bookingData.roomId },
-            include: { room_type: true },
+        const rooms = await prisma.room.findMany({
+            where: { room_type_id: bookingData.roomTypeId },
+            select: { id: true },
+            // include: { room_type: true },
         })
 
+        const bookingsSet = new Set(existingBookings)
+        let roomId
+        for (let i of rooms) {
+            if (!bookingsSet.has(i.id)) {
+                roomId = i.id
+                break
+            }
+        }
+
+        const room = await prisma.room.findFirst({
+            where: {
+                id: roomId,
+            },
+            include: { room_type: true },
+        })
         if (!room) {
             res.status(404).json({ message: "Room not found" })
             return
@@ -49,7 +72,8 @@ export const createBooking = async (req: AuthRequest, res: Response): Promise<vo
         const booking = await prisma.booking.create({
             data: {
                 guest_id: userId,
-                room_id: bookingData.roomId,
+                room_id: room.id,
+                room_type_id: bookingData.roomTypeId,
                 check_in_date: checkIn,
                 check_out_date: checkOut,
                 total_price: totalPrice,
@@ -87,7 +111,7 @@ export const createBooking = async (req: AuthRequest, res: Response): Promise<vo
                 status: booking.room.status,
                 imageUrls: booking.room.image_urls,
                 roomType: {
-                    id: booking.room.room_type.id,
+                    // id: booking.room.room_type.id,
                     name: booking.room.room_type.name,
                     description: booking.room.room_type.description || "",
                     pricePerNight: Number(booking.room.room_type.price_per_night),
@@ -179,5 +203,31 @@ export const getUserBookings = async (req: AuthRequest, res: Response): Promise<
     } catch (error) {
         console.error("Get user bookings error:", error)
         res.status(500).json({ message: "Internal server error" })
+    }
+}
+
+export const deleteUserBooking = async (req: AuthRequest, res: Response): Promise<void> => {
+    try {
+        const user = req.user?.id
+        const booking: BookingDataRequest | undefined = req.body
+
+        if (!booking || !user) {
+            res.status(400).json({ error: "data is required" })
+            return
+        } else if (user != booking.guestId) {
+            res.status(400).json({ error: "You are daun?" })
+            return
+        }
+
+        const deletedBooking = await prisma.booking.deleteMany({
+            where: {
+                room_id: booking.roomId,
+            },
+        })
+
+        res.status(200).json({ message: "Booking deleted successfully", booking: deletedBooking })
+    } catch (error: any) {
+        console.error("Error deleting booking:", error)
+        res.status(500).json({ error: "Failed to delete booking" })
     }
 }

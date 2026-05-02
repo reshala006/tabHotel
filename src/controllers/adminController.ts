@@ -5,6 +5,11 @@ import { AuthRequest } from "../middleware/auth"
 export const getAllBookings = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
         const bookings = await prisma.booking.findMany({
+            where: {
+                status: {
+                    in: ["confirmed", "checked_in"],
+                },
+            },
             include: {
                 room: {
                     include: {
@@ -30,23 +35,18 @@ export const getAllBookings = async (req: AuthRequest, res: Response): Promise<v
             checkInDate: booking.check_in_date,
             checkOutDate: booking.check_out_date,
             totalPrice: Number(booking.total_price),
-            guestData: booking.guest_data,
             room: {
                 id: booking.room.id,
                 number: booking.room.number,
                 floor: booking.room.floor,
                 status: booking.room.status,
-                imageUrls: booking.room.image_urls,
                 roomType: {
                     id: booking.room.room_type.id,
                     name: booking.room.room_type.name,
                     description: booking.room.room_type.description || "",
                     pricePerNight: Number(booking.room.room_type.price_per_night),
                     capacity: booking.room.room_type.capacity,
-                    amenities: booking.room.room_type.amenities,
-                    imageUrl: booking.room.room_type.image_url || undefined,
                 },
-                createdAt: booking.room.created_at,
             },
             guest: {
                 id: booking.guest.id,
@@ -70,7 +70,8 @@ export const updateBookingStatus = async (req: AuthRequest, res: Response): Prom
         const bookingId = parseInt(req.params.id)
         const { status } = req.body as { status: string }
 
-        const validStatuses = ["pending", "confirmed", "checked_in", "checked_out", "cancelled"]
+        // const validStatuses = ["pending", "confirmed", "checked_in", "checked_out", "cancelled"]
+        const validStatuses = ["confirmed", "checked_in", "checked_out", "cancelled"]
 
         if (!validStatuses.includes(status)) {
             res.status(400).json({ message: "Invalid status" })
@@ -97,15 +98,38 @@ export const updateBookingStatus = async (req: AuthRequest, res: Response): Prom
             },
         })
 
+        // if (status === "checked_in") {
+        //     await prisma.room.update({
+        //         where: { id: booking.room_id },
+        //         data: { status: "occupied" },
+        //     })
+        // } else if (status === "checked_out" || status === "cancelled") {
+        //     await prisma.room.update({
+        //         where: { id: booking.room_id },
+        //         data: { status: "available" },
+        //     })
+        // }
+
+        if (status === "confirmed") {
+            await prisma.room.update({
+                where: { id: booking.room_id },
+                data: { status: "available" },
+            })
+        }
         if (status === "checked_in") {
             await prisma.room.update({
                 where: { id: booking.room_id },
                 data: { status: "occupied" },
             })
-        } else if (status === "checked_out" || status === "cancelled") {
+        } else if (status === "cancelled") {
             await prisma.room.update({
                 where: { id: booking.room_id },
                 data: { status: "available" },
+            })
+        } else if (status === "checked_out") {
+            await prisma.room.update({
+                where: { id: booking.room_id },
+                data: { status: "cleaning" },
             })
         }
 

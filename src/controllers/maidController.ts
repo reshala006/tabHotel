@@ -2,28 +2,14 @@ import { Response } from "express"
 import { prisma } from "../utils/prisma"
 import { AuthRequest } from "../middleware/auth"
 
-// Получение списка номеров для уборки
 export const getCleaningTasks = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
         const today = new Date()
         today.setHours(0, 0, 0, 0)
 
-        // Получаем номера, которые требуют уборки
         const rooms = await prisma.room.findMany({
             where: {
-                OR: [
-                    { status: "cleaning" },
-                    {
-                        bookings: {
-                            some: {
-                                status: "checked_out",
-                                check_out_date: {
-                                    gte: today,
-                                },
-                            },
-                        },
-                    },
-                ],
+                status: "cleaning",
             },
             include: {
                 room_type: {
@@ -129,15 +115,15 @@ export const updateCleaningStatus = async (req: AuthRequest, res: Response): Pro
         }
 
         const response = {
-            id: cleaningLog.id,
-            roomId: cleaningLog.room_id,
-            roomNumber: cleaningLog.room.number,
-            floor: cleaningLog.room.floor,
-            roomType: cleaningLog.room.room_type.name,
-            status: cleaningLog.status,
-            notes: cleaningLog.notes,
-            date: cleaningLog.date,
-            updatedAt: cleaningLog.created_at,
+            id: cleaningLog?.id,
+            roomId: cleaningLog?.room_id,
+            roomNumber: cleaningLog?.room.number,
+            floor: cleaningLog?.room.floor,
+            roomType: cleaningLog?.room.room_type.name,
+            status: cleaningLog?.status,
+            notes: cleaningLog?.notes,
+            date: cleaningLog?.date,
+            updatedAt: cleaningLog?.created_at,
         }
 
         res.status(200).json(response)

@@ -36,13 +36,14 @@ model RoomType {
   created_at     DateTime @default(now()) @map("created_at")
 
   rooms Room[]
+  booking Booking[]
 
   @@map("room_types")
 }
 
 model Room {
   id           Int      @id @default(autoincrement())
-  number       String   @unique
+  number       Int  @unique
   floor        Int
   room_type_id Int
   status       String   @default("available")
@@ -61,6 +62,7 @@ model Booking {
   id              Int      @id @default(autoincrement())
   guest_id        Int
   room_id         Int
+  room_type_id    Int
   check_in_date   DateTime
   check_out_date  DateTime
   status          String   @default("pending")
@@ -73,6 +75,7 @@ model Booking {
   // Связи
   guest User @relation(fields: [guest_id], references: [id], onDelete: Cascade)
   room  Room @relation(fields: [room_id], references: [id], onDelete: Cascade)
+  room_type RoomType  @relation(fields: [room_type_id], references: [id] ) 
   payments Payment[]
 
   @@map("bookings")
