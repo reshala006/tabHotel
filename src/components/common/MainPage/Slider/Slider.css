@@ -17,10 +17,10 @@
     cursor: pointer;
 }
 .slider__top__button-back {
-    transform: translateX(20px) rotate(-45deg);
+    transform: translateX(0px) rotate(-45deg);
 }
 .slider__top__button-forward {
-    transform: translateX(-20px) rotate(135deg);
+    transform: translateX(0px) rotate(135deg);
 }
 .slider__top__img {
     overflow: hidden;

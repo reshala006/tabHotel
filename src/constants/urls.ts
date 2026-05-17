@@ -6,6 +6,8 @@ const urls = {
     статистика: "/admin/stats",
     уборка: "/maid/cleaning",
     брони: "/staff/staff-rent",
+    заселить: "/admin/create-bookings",
+    пользователи: "admin/users",
 }
 
 export default urls

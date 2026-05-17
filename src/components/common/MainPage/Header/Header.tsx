@@ -10,10 +10,10 @@ function Header() {
             </div>
 
             <div className="header__welcome">
-                <h1 className="header__welcome__title">Хватить спать в землянках</h1>
+                <h1 className="header__welcome__title">Хватить спать в машuне</h1>
 
                 <div className="header__welcome__path">
-                    <h1 className="header__welcome__path__title">Заселяйся к нам на сервер по адресу:</h1>
+                    <h1 className="header__welcome__path__title">Заселяйся к нам по адресу:</h1>
                     <button
                         className="header__welcome__path__ref"
                         onClick={() => {

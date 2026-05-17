@@ -26,7 +26,6 @@ function RentCard({ data }: Props) {
             body: JSON.stringify({ status: select }),
         })
         if (response.status === 200) {
-            // dispatch(fetchStaffBookings())
             show("success")
         } else {
             show("error")
@@ -52,9 +51,17 @@ function RentCard({ data }: Props) {
                     <li className="rentCard__item">дата брони:</li>
                 </ul>
                 <ul className="rentCard__list">
-                    <li className="rentCard__item">{`${data.guest.firstName} ${data.guest.lastName}`}</li>
+                    {data.guestData?.firstName ? (
+                        <li className="rentCard__item">{`${data.guestData.firstName} ${data.guestData.lastName}`}</li>
+                    ) : (
+                        <li className="rentCard__item">{`${data.guest.firstName} ${data.guest.lastName}`}</li>
+                    )}
                     <li className="rentCard__item">{data.guest.email}</li>
-                    <li className="rentCard__item">{data.guest.phoneNumber}</li>
+                    {data.guestData?.phone ? (
+                        <li className="rentCard__item">{data.guestData.phone}</li>
+                    ) : (
+                        <li className="rentCard__item">{data.guest.phoneNumber}</li>
+                    )}
                     <li className="rentCard__item">{data.room.number}</li>
                     <li className="rentCard__item">{data.room.floor}</li>
                     <li className="rentCard__item">{data.checkInDate.split("T")[0]}</li>

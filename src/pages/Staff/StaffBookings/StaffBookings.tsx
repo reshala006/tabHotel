@@ -1,9 +1,9 @@
+import "./StaffBookings.css"
 import GuestRoomsFilter from "@/components/common/GuestRoomsFilter/GuestRoomsFilter"
-import "./Rooms.css"
 import { useEffect, useMemo, useState } from "react"
 import { useAppDispatch, useAppSelector } from "@/hooks/useTypedRedux"
 import { fetchRooms } from "@/store/action/rooms"
-import RoomCard from "@/components/common/RoomCard/RoomCard"
+import RoomCard from "@/components/common/Staff/RoomCard/RoomCard"
 import type { Filters } from "@/types"
 import { fetchRoomsAvailable } from "@/store/action/roomsAvailable"
 
@@ -33,7 +33,18 @@ function getRoomTypeIds(type: number, capacity: number) {
     return roomMap[`${type}-${capacity}`] || "0-0"
 }
 
-function Rooms() {
+type userDataType = {
+    firstName: string
+    lastName: string
+    phone: string
+}
+
+function StaffBookins() {
+    const [userData, setUserData] = useState<userDataType>({
+        firstName: "",
+        lastName: "",
+        phone: "",
+    })
     const [filters, setFilters] = useState<Filters>({
         checkInDate: new Date().toISOString().split("T")[0],
         checkOutDate: new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString().split("T")[0],
@@ -81,10 +92,47 @@ function Rooms() {
         <div className="rooms">
             <GuestRoomsFilter allRooms={rooms} filters={filters} setFilters={setFilters} />
 
+            <div className="staffBookins__guest">
+                <input
+                    value={userData.firstName}
+                    onChange={(e) =>
+                        setUserData((prev) => ({
+                            ...prev,
+                            firstName: e.target.value,
+                        }))
+                    }
+                    placeholder="имя"
+                    type="text"
+                />
+
+                <input
+                    value={userData.lastName}
+                    onChange={(e) =>
+                        setUserData((prev) => ({
+                            ...prev,
+                            lastName: e.target.value,
+                        }))
+                    }
+                    placeholder="фамилия"
+                    type="text"
+                />
+
+                <input
+                    value={userData.phone}
+                    onChange={(e) =>
+                        setUserData((prev) => ({
+                            ...prev,
+                            phone: e.target.value,
+                        }))
+                    }
+                    placeholder="телефон"
+                    type="tel"
+                />
+            </div>
             <div className="rooms__list">
                 {allowedRoomIds.map((value) => {
                     if (availableRoomsSet.has(value)) {
-                        return <RoomCard key={value} data={rooms[value]} filters={filters} />
+                        return <RoomCard key={value} data={rooms[value]} filters={filters} userData={userData} />
                     }
                 })}
             </div>
@@ -92,4 +140,4 @@ function Rooms() {
     )
 }
 
-export default Rooms
+export default StaffBookins

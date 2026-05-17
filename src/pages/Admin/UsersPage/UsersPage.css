@@ -1,0 +1,321 @@
+/* Базовые стили */
+.users-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #333;
+}
+.users-page > * {
+    font-size: 2.5rem;
+}
+
+/* Хедер */
+.users-page__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.users-page__refresh-btn {
+    padding: 8px 16px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+}
+
+.users-page__refresh-btn:hover {
+    background: #e0e0e0;
+}
+
+/* Десктопная таблица */
+.users-page__desktop-view {
+    display: block;
+}
+
+.users-page__table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border: 1px solid #ddd;
+}
+
+.users-page__table th,
+.users-page__table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+}
+
+.users-page__table th {
+    background: #f5f5f5;
+    font-weight: 600;
+    color: #333;
+}
+
+.users-page__table tr:hover {
+    background: #f9f9f9;
+}
+
+/* Действия с кнопками */
+.users-page__actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.users-page__edit-btn,
+.users-page__delete-btn {
+    padding: 4px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    background: white;
+    color: #333;
+}
+
+.users-page__edit-btn:hover {
+    background: #e6f7ff;
+    border-color: #40a9ff;
+    color: #1890ff;
+}
+
+.users-page__delete-btn:hover {
+    background: #fff1f0;
+    border-color: #ff4d4f;
+    color: #ff4d4f;
+}
+
+/* Мобильная версия */
+.users-page__mobile-view {
+    display: none;
+}
+
+.users-page__card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    background: white;
+}
+
+.users-page__card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.users-page__card-id {
+    font-size: 12px;
+    color: #666;
+}
+
+.users-page__card-role {
+    font-size: 12px;
+    background: #f0f0f0;
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: #333;
+}
+
+.users-page__card-body {
+    margin-bottom: 12px;
+}
+
+.users-page__card-name {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.users-page__card-email {
+    font-size: 14px;
+    color: #0066cc;
+    margin-bottom: 4px;
+    word-break: break-all;
+}
+
+.users-page__card-phone {
+    font-size: 14px;
+    color: #666;
+}
+
+.users-page__card-actions {
+    display: flex;
+    gap: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #eee;
+}
+
+.users-page__card-actions button {
+    flex: 1;
+    padding: 8px;
+}
+
+/* Модальное окно */
+.users-page__modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.users-page__modal {
+    background: white;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.users-page__modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px 0 20px;
+}
+
+.users-page__modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.users-page__modal-close {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    line-height: 1;
+    color: #333;
+}
+
+.users-page__modal-close:hover {
+    color: #666;
+}
+
+.users-page__form {
+    padding: 20px;
+}
+
+.users-page__form-group {
+    margin-bottom: 16px;
+}
+
+.users-page__form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #333;
+}
+
+.users-page__form-group input,
+.users-page__form-group select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+    background: white;
+}
+
+.users-page__form-group input:focus,
+.users-page__form-group select:focus {
+    outline: none;
+    border-color: #40a9ff;
+}
+
+.users-page__form-group input::placeholder {
+    color: #999;
+}
+
+.users-page__modal-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.users-page__save-btn,
+.users-page__cancel-btn {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    background: white;
+    color: #333;
+}
+
+.users-page__save-btn {
+    background: #1890ff;
+    border-color: #1890ff;
+    color: white;
+}
+
+.users-page__save-btn:hover {
+    background: #40a9ff;
+}
+
+.users-page__cancel-btn:hover {
+    background: #f5f5f5;
+}
+
+/* Лоадер */
+.users-page__loading {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+/* Адаптив под мобилки */
+@media (max-width: 768px) {
+    .users-page {
+        padding: 12px;
+    }
+
+    .users-page__desktop-view {
+        display: none;
+    }
+
+    .users-page__mobile-view {
+        display: block;
+    }
+}
+
+/* Адаптив под планшеты */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .users-page {
+        padding: 16px;
+    }
+
+    .users-page__table th,
+    .users-page__table td {
+        padding: 8px;
+        font-size: 2rem;
+    }
+}

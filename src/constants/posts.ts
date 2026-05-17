@@ -18,11 +18,11 @@ const posts = {
     },
     manager: {
         post: "manager",
-        columns: ["брони", "профиль"],
+        columns: ["брони", "заселить", "профиль"],
     },
     admin: {
         post: "admin",
-        columns: ["статистика", "брони", "профиль"],
+        columns: ["статистика", "заселить", "пользователи", "брони", "профиль"],
     },
 } as Record<string, Post>
 

@@ -1,0 +1,11 @@
+.staffBookins__guest {
+    margin: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.staffBookins__guest > input {
+    font-size: 3rem;
+    padding: 3px;
+}

@@ -35,6 +35,11 @@ export interface Booking {
         lastName: string
         phoneNumber: string
     }
+    guestData?: {
+        firstName: string
+        lastName: string
+        phone: string
+    }
 
     createdAt: string
 }

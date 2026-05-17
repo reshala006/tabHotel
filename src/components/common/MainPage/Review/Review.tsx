@@ -1,6 +1,6 @@
 import "./Review.css"
-import fullHotel from "@images/full-length-hotel.png"
-import area from "@images/area.png"
+import fullHotel from "@images/full-length-hotel.webp"
+import area from "@images/area.webp"
 
 function Review() {
     return (

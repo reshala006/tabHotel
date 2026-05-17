@@ -6,18 +6,30 @@ import { useNotification } from "@/hooks/useNotification"
 import { useAppDispatch } from "@/hooks/useTypedRedux"
 import { fetchRoomsAvailable } from "@/store/action/roomsAvailable"
 
+type userDataType = {
+    firstName: string
+    lastName: string
+    phone: string
+}
+
 interface Props {
     data: Room
     filters: Filters
+    userData: userDataType
 }
 
-function RoomCard({ data, filters }: Props) {
+function RoomCard({ data, filters, userData }: Props) {
     const navigate = useNavigate()
     const { show } = useNotification()
     const dispatch = useAppDispatch()
 
     const handleClick = () => {
-        fetch(`${import.meta.env.VITE_API_URL}/bookings/create`, {
+        console.log(userData)
+        if (userData.firstName == "" || userData.lastName == "") {
+            show("error")
+            return
+        }
+        fetch(`${import.meta.env.VITE_API_URL}/admin/manager-create`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -27,6 +39,11 @@ function RoomCard({ data, filters }: Props) {
                 roomTypeId: data.roomType.id,
                 checkInDate: filters.checkInDate,
                 checkOutDate: filters.checkOutDate,
+                guestData: {
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
+                    phone: userData.phone,
+                },
             }),
         }).then((data) => {
             if (data.statusText === "Unauthorized") navigate("/profile")

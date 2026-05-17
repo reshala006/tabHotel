@@ -82,7 +82,7 @@ function GuestRoomsFilter({ filters, setFilters }: Props) {
                     onChange={(event) => {
                         let value = Number(event.target.value)
 
-                        if (value > 80) value = 80
+                        if (value > 8000) value = 8000
                         if (value < 0) value = 0
 
                         if (timeoutRef.current) {
@@ -102,7 +102,7 @@ function GuestRoomsFilter({ filters, setFilters }: Props) {
                     onChange={(event) => {
                         let value = Number(event.target.value)
 
-                        if (value > 80) value = 80
+                        if (value > 8000) value = 8000
                         if (value < 0) value = 0
 
                         if (timeoutRef.current) {
