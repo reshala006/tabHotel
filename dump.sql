@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict wdVocZbRbG9b5GlbHFwjtujFrxxmMg4ExQf2U0N4ISnaqO6tmOC7XJG6sXu88Mh
+\restrict ayr5vOOPZITILcebivpHdjHkbshViXjN75ehFGoID5Dozma6e1hbU309WK0vxZP
 
 -- Dumped from database version 18.3
 -- Dumped by pg_dump version 18.3
@@ -367,15 +367,15 @@ COPY public.payments (id, booking_id, amount, status, method, transaction_id, cr
 --
 
 COPY public.room_types (id, name, description, price_per_night, capacity, amenities, image_url, created_at) FROM stdin;
-2	economy-solo-x2	Два одноместных номера категории «Эконом» рядом, идеально для друзей или коллег.	30	2	{}	/uploads/rooms/4/bedroom-first.png	2025-10-07 08:01:08.607
-3	economy-duo	Двухместный номер эконом-класса с одной двуспальной кроватью и всем необходимым для отдыха.	40	2	{}	/uploads/rooms/7/bedroom-first.png	2025-10-07 08:02:37.695
-4	comfort-solo	Уютный одноместный номер с улучшенным интерьером и одной удобной кроватью.	40	1	{}	/uploads/rooms/10/bedroom-first.png	2025-10-18 11:44:42.309
-5	comfort-solo-x2	Номер категории «Комфорт» с двумя отдельными кроватями и современным оформлением.	50	2	{}	/uploads/rooms/13/bedroom-first.png	2025-10-18 11:45:21.332
-6	comfort-duo	Просторный двухместный номер категории «Комфорт» с одной большой двуспальной кроватью.	60	2	{}	/uploads/rooms/16/bedroom-first.png	2025-10-18 11:45:57.112
-8	luxuary-solo-x2	Номер премиум-класса с двумя отдельными кроватями и изысканным интерьером.	70	2	{}	/uploads/rooms/22/bedroom-first.png	2025-10-18 11:48:36.783
-9	luxuary-duo	Роскошный двухместный номер с одной большой кроватью, зоной отдыха и расширенными удобствами.	80	2	{}	/uploads/rooms/25/bedroom-first.png	2025-10-18 11:49:10.787
-7	luxuary-solo	Одноместный номер премиум-класса с высоким уровнем комфорта и одной кроватью.	60	1	{}	/uploads/rooms/19/bedroom-first.png	2025-10-18 11:48:17.402
-1	economy-solo	Одноместный номер эконом-класса с одной кроватью и базовыми удобствами.	20	1	{}	/uploads/rooms/1/bedroom-first.png	2025-10-07 08:00:16.95
+2	economy-solo-x2	Два одноместных номера категории «Эконом» рядом, идеально для друзей или коллег.	3000	2	{}	/uploads/rooms/4/bedroom-first.webp	2025-10-07 08:01:08.607
+3	economy-duo	Двухместный номер эконом-класса с одной двуспальной кроватью и всем необходимым для отдыха.	4000	2	{}	/uploads/rooms/7/bedroom-first.webp	2025-10-07 08:02:37.695
+4	comfort-solo	Уютный одноместный номер с улучшенным интерьером и одной удобной кроватью.	4000	1	{}	/uploads/rooms/10/bedroom-first.webp	2025-10-18 11:44:42.309
+5	comfort-solo-x2	Номер категории «Комфорт» с двумя отдельными кроватями и современным оформлением.	5000	2	{}	/uploads/rooms/13/bedroom-first.webp	2025-10-18 11:45:21.332
+6	comfort-duo	Просторный двухместный номер категории «Комфорт» с одной большой двуспальной кроватью.	6000	2	{}	/uploads/rooms/16/bedroom-first.webp	2025-10-18 11:45:57.112
+8	luxuary-solo-x2	Номер премиум-класса с двумя отдельными кроватями и изысканным интерьером.	7000	2	{}	/uploads/rooms/22/bedroom-first.webp	2025-10-18 11:48:36.783
+9	luxuary-duo	Роскошный двухместный номер с одной большой кроватью, зоной отдыха и расширенными удобствами.	8000	2	{}	/uploads/rooms/25/bedroom-first.webp	2025-10-18 11:49:10.787
+7	luxuary-solo	Одноместный номер премиум-класса с высоким уровнем комфорта и одной кроватью.	6000	1	{}	/uploads/rooms/19/bedroom-first.webp	2025-10-18 11:48:17.402
+1	economy-solo	Одноместный номер эконом-класса с одной кроватью и базовыми удобствами.	2000	1	{}	/uploads/rooms/1/bedroom-first.webp	2025-10-07 08:00:16.95
 \.
 
 
@@ -384,33 +384,33 @@ COPY public.room_types (id, name, description, price_per_night, capacity, amenit
 --
 
 COPY public.rooms (id, number, floor, room_type_id, status, created_at, image_urls) FROM stdin;
-15	6	2	2	available	2025-10-18 12:03:17.217	{/uploads/rooms/6/bathroom.png,/uploads/rooms/6/bedroom-first.png,/uploads/rooms/6/bedroom-second.png}
-17	8	3	3	available	2025-10-18 12:04:13.141	{/uploads/rooms/8/bathroom.png,/uploads/rooms/8/bedroom-first.png,/uploads/rooms/8/bedroom-second.png}
-32	23	8	8	available	2025-10-18 12:13:49.753	{/uploads/rooms/23/bathroom.png,/uploads/rooms/23/bedroom-first.png,/uploads/rooms/23/bedroom-second.png,/uploads/rooms/23/recreation-area-first.png,/uploads/rooms/23/recreation-area-second.png}
-33	24	8	8	available	2025-10-18 12:13:49.753	{/uploads/rooms/24/bathroom.png,/uploads/rooms/24/bedroom-first.png,/uploads/rooms/24/bedroom-second.png,/uploads/rooms/24/recreation-area-first.png,/uploads/rooms/24/recreation-area-second.png}
-18	9	3	3	available	2025-10-18 12:04:13.141	{/uploads/rooms/9/bathroom.png,/uploads/rooms/9/bedroom-first.png,/uploads/rooms/9/bedroom-second.png}
-19	10	4	4	available	2025-10-18 12:05:55.593	{/uploads/rooms/10/bathroom.png,/uploads/rooms/10/bedroom-first.png,/uploads/rooms/10/bedroom-second.png}
-20	11	4	4	available	2025-10-18 12:05:55.593	{/uploads/rooms/11/bathroom.png,/uploads/rooms/11/bedroom-first.png,/uploads/rooms/11/bedroom-second.png}
-21	12	4	4	available	2025-10-18 12:05:55.593	{/uploads/rooms/12/bathroom.png,/uploads/rooms/12/bedroom-first.png,/uploads/rooms/12/bedroom-second.png}
-35	26	9	9	available	2025-10-18 12:14:11.18	{/uploads/rooms/26/bathroom.png,/uploads/rooms/26/bedroom-first.png,/uploads/rooms/26/bedroom-second.png,/uploads/rooms/26/recreation-area-first.png,/uploads/rooms/26/recreation-area-second.png}
-22	13	5	5	available	2025-10-18 12:06:28.504	{/uploads/rooms/13/bathroom.png,/uploads/rooms/13/bedroom-first.png,/uploads/rooms/13/bedroom-second.png}
-26	17	6	6	available	2025-10-18 12:06:56.637	{/uploads/rooms/17/bathroom.png,/uploads/rooms/17/bedroom-first.png,/uploads/rooms/17/bedroom-second.png}
-27	18	6	6	available	2025-10-18 12:06:56.637	{/uploads/rooms/18/bathroom.png,/uploads/rooms/18/bedroom-first.png,/uploads/rooms/18/bedroom-second.png}
-29	20	7	7	available	2025-10-18 12:07:27.03	{/uploads/rooms/20/bathroom.png,/uploads/rooms/20/bedroom-first.png,/uploads/rooms/20/bedroom-second.png,/uploads/rooms/20/recreation-area-first.png,/uploads/rooms/20/recreation-area-second.png}
-30	21	7	7	available	2025-10-18 12:07:27.03	{/uploads/rooms/21/bathroom.png,/uploads/rooms/21/bedroom-first.png,/uploads/rooms/21/bedroom-second.png,/uploads/rooms/21/recreation-area-first.png,/uploads/rooms/21/recreation-area-second.png}
-36	27	9	9	available	2025-10-18 12:14:11.18	{/uploads/rooms/27/bathroom.png,/uploads/rooms/27/bedroom-first.png,/uploads/rooms/27/bedroom-second.png,/uploads/rooms/27/recreation-area-first.png,/uploads/rooms/27/recreation-area-second.png}
-16	7	3	3	available	2025-10-18 12:03:52.152	{/uploads/rooms/7/bathroom.png,/uploads/rooms/7/bedroom-first.png,/uploads/rooms/7/bedroom-second.png}
-6	2	1	1	available	2025-10-18 11:40:19.601	{/uploads/rooms/2/bathroom.png,/uploads/rooms/2/bedroom-first.png,/uploads/rooms/2/bedroom-second.png}
-24	15	5	5	available	2025-10-18 12:06:28.504	{/uploads/rooms/15/bathroom.png,/uploads/rooms/15/bedroom-first.png,/uploads/rooms/15/bedroom-second.png}
-23	14	5	5	available	2025-10-18 12:06:28.504	{/uploads/rooms/14/bathroom.png,/uploads/rooms/14/bedroom-first.png,/uploads/rooms/14/bedroom-second.png}
-34	25	9	9	available	2025-10-18 12:14:11.18	{/uploads/rooms/25/bathroom.png,/uploads/rooms/25/bedroom-first.png,/uploads/rooms/25/bedroom-second.png,/uploads/rooms/25/recreation-area-first.png,/uploads/rooms/25/recreation-area-second.png}
-28	19	7	7	available	2025-10-18 12:07:27.03	{/uploads/rooms/19/bathroom.png,/uploads/rooms/19/bedroom-first.png,/uploads/rooms/19/bedroom-second.png,/uploads/rooms/19/recreation-area-first.png,/uploads/rooms/19/recreation-area-second.png}
-25	16	6	6	available	2025-10-18 12:06:56.637	{/uploads/rooms/16/bathroom.png,/uploads/rooms/16/bedroom-first.png,/uploads/rooms/16/bedroom-second.png}
-5	1	1	1	available	2025-10-18 11:39:17.015	{/uploads/rooms/1/bathroom.png,/uploads/rooms/1/bedroom-first.png,/uploads/rooms/1/bedroom-second.png}
-7	3	1	1	available	2025-10-18 11:42:36.637	{/uploads/rooms/3/bathroom.png,/uploads/rooms/3/bedroom-first.png,/uploads/rooms/3/bedroom-second.png}
-9	4	2	2	available	2025-10-18 12:00:49.829	{/uploads/rooms/4/bathroom.png,/uploads/rooms/4/bedroom-first.png,/uploads/rooms/4/bedroom-second.png}
-31	22	8	8	available	2025-10-18 12:13:49.753	{/uploads/rooms/22/bathroom.png,/uploads/rooms/22/bedroom-first.png,/uploads/rooms/22/bedroom-second.png,/uploads/rooms/22/recreation-area-first.png,/uploads/rooms/22/recreation-area-second.png}
-14	5	2	2	available	2025-10-18 12:03:07.571	{/uploads/rooms/5/bathroom.png,/uploads/rooms/5/bedroom-first.png,/uploads/rooms/5/bedroom-second.png}
+25	16	6	6	available	2025-10-18 12:06:56.637	{/uploads/rooms/16/bathroom.webp,/uploads/rooms/16/bedroom-first.webp,/uploads/rooms/16/bedroom-second.webp}
+5	1	1	1	available	2025-10-18 11:39:17.015	{/uploads/rooms/1/bathroom.webp,/uploads/rooms/1/bedroom-first.webp,/uploads/rooms/1/bedroom-second.webp}
+31	22	8	8	available	2025-10-18 12:13:49.753	{/uploads/rooms/22/bathroom.webp,/uploads/rooms/22/bedroom-first.webp,/uploads/rooms/22/bedroom-second.webp,/uploads/rooms/22/recreation-area-first.webp,/uploads/rooms/22/recreation-area-second.webp}
+15	6	2	2	available	2025-10-18 12:03:17.217	{/uploads/rooms/6/bathroom.webp,/uploads/rooms/6/bedroom-first.webp,/uploads/rooms/6/bedroom-second.webp}
+34	25	9	9	cleaning	2025-10-18 12:14:11.18	{/uploads/rooms/25/bathroom.webp,/uploads/rooms/25/bedroom-first.webp,/uploads/rooms/25/bedroom-second.webp,/uploads/rooms/25/recreation-area-first.webp,/uploads/rooms/25/recreation-area-second.webp}
+9	4	2	2	available	2025-10-18 12:00:49.829	{/uploads/rooms/4/bathroom.webp,/uploads/rooms/4/bedroom-first.webp,/uploads/rooms/4/bedroom-second.webp}
+32	23	8	8	available	2025-10-18 12:13:49.753	{/uploads/rooms/23/bathroom.webp,/uploads/rooms/23/bedroom-first.webp,/uploads/rooms/23/bedroom-second.webp,/uploads/rooms/23/recreation-area-first.webp,/uploads/rooms/23/recreation-area-second.webp}
+14	5	2	2	available	2025-10-18 12:03:07.571	{/uploads/rooms/5/bathroom.webp,/uploads/rooms/5/bedroom-first.webp,/uploads/rooms/5/bedroom-second.webp}
+17	8	3	3	available	2025-10-18 12:04:13.141	{/uploads/rooms/8/bathroom.webp,/uploads/rooms/8/bedroom-first.webp,/uploads/rooms/8/bedroom-second.webp}
+33	24	8	8	available	2025-10-18 12:13:49.753	{/uploads/rooms/24/bathroom.webp,/uploads/rooms/24/bedroom-first.webp,/uploads/rooms/24/bedroom-second.webp,/uploads/rooms/24/recreation-area-first.webp,/uploads/rooms/24/recreation-area-second.webp}
+18	9	3	3	available	2025-10-18 12:04:13.141	{/uploads/rooms/9/bathroom.webp,/uploads/rooms/9/bedroom-first.webp,/uploads/rooms/9/bedroom-second.webp}
+19	10	4	4	available	2025-10-18 12:05:55.593	{/uploads/rooms/10/bathroom.webp,/uploads/rooms/10/bedroom-first.webp,/uploads/rooms/10/bedroom-second.webp}
+20	11	4	4	available	2025-10-18 12:05:55.593	{/uploads/rooms/11/bathroom.webp,/uploads/rooms/11/bedroom-first.webp,/uploads/rooms/11/bedroom-second.webp}
+21	12	4	4	available	2025-10-18 12:05:55.593	{/uploads/rooms/12/bathroom.webp,/uploads/rooms/12/bedroom-first.webp,/uploads/rooms/12/bedroom-second.webp}
+35	26	9	9	available	2025-10-18 12:14:11.18	{/uploads/rooms/26/bathroom.webp,/uploads/rooms/26/bedroom-first.webp,/uploads/rooms/26/bedroom-second.webp,/uploads/rooms/26/recreation-area-first.webp,/uploads/rooms/26/recreation-area-second.webp}
+22	13	5	5	available	2025-10-18 12:06:28.504	{/uploads/rooms/13/bathroom.webp,/uploads/rooms/13/bedroom-first.webp,/uploads/rooms/13/bedroom-second.webp}
+26	17	6	6	available	2025-10-18 12:06:56.637	{/uploads/rooms/17/bathroom.webp,/uploads/rooms/17/bedroom-first.webp,/uploads/rooms/17/bedroom-second.webp}
+27	18	6	6	available	2025-10-18 12:06:56.637	{/uploads/rooms/18/bathroom.webp,/uploads/rooms/18/bedroom-first.webp,/uploads/rooms/18/bedroom-second.webp}
+29	20	7	7	available	2025-10-18 12:07:27.03	{/uploads/rooms/20/bathroom.png,/uploads/rooms/20/bedroom-first.webp,/uploads/rooms/20/bedroom-second.webp,/uploads/rooms/20/recreation-area-first.webp,/uploads/rooms/20/recreation-area-second.webp}
+30	21	7	7	available	2025-10-18 12:07:27.03	{/uploads/rooms/21/bathroom.webp,/uploads/rooms/21/bedroom-first.webp,/uploads/rooms/21/bedroom-second.webp,/uploads/rooms/21/recreation-area-first.webp,/uploads/rooms/21/recreation-area-second.webp}
+36	27	9	9	available	2025-10-18 12:14:11.18	{/uploads/rooms/27/bathroom.webp,/uploads/rooms/27/bedroom-first.webp,/uploads/rooms/27/bedroom-second.webp,/uploads/rooms/27/recreation-area-first.webp,/uploads/rooms/27/recreation-area-second.webp}
+16	7	3	3	available	2025-10-18 12:03:52.152	{/uploads/rooms/7/bathroom.webp,/uploads/rooms/7/bedroom-first.webp,/uploads/rooms/7/bedroom-second.webp}
+6	2	1	1	available	2025-10-18 11:40:19.601	{/uploads/rooms/2/bathroom.webp,/uploads/rooms/2/bedroom-first.webp,/uploads/rooms/2/bedroom-second.webp}
+24	15	5	5	available	2025-10-18 12:06:28.504	{/uploads/rooms/15/bathroom.webp,/uploads/rooms/15/bedroom-first.webp,/uploads/rooms/15/bedroom-second.webp}
+23	14	5	5	available	2025-10-18 12:06:28.504	{/uploads/rooms/14/bathroom.webp,/uploads/rooms/14/bedroom-first.webp,/uploads/rooms/14/bedroom-second.webp}
+28	19	7	7	available	2025-10-18 12:07:27.03	{/uploads/rooms/19/bathroom.webp,/uploads/rooms/19/bedroom-first.webp,/uploads/rooms/19/bedroom-second.webp,/uploads/rooms/19/recreation-area-first.webp,/uploads/rooms/19/recreation-area-second.webp}
+7	3	1	1	available	2025-10-18 11:42:36.637	{/uploads/rooms/3/bathroom.webp,/uploads/rooms/3/bedroom-first.webp,/uploads/rooms/3/bedroom-second.webp}
 \.
 
 
@@ -420,10 +420,10 @@ COPY public.rooms (id, number, floor, room_type_id, status, created_at, image_ur
 
 COPY public.users (id, email, password_hash, role, first_name, last_name, phone_number, created_at, updated_at) FROM stdin;
 11	guest1@mail.ru	$2b$12$.BsuZ6Fk3TqnjXxa34lPjOlfmLnmUI6yKG46uVhTgD34vyqmiygka	guest	Ибрагим	Рагимов	89253457684	2025-09-26 18:19:06.46	2025-09-26 18:19:06.46
-12	guest2@mail.ru	$2b$12$8Sj4b1YVq47MvJUX31SQ3.Cpo3.BUrHMsHFzFnfsZ/UtTNHfNlKYm	guest	Ахмад	Магомедов	89253428693	2025-09-26 18:19:35.582	2025-09-26 18:19:35.582
 13	manager1@mail.ru	$2b$12$RmAYP44bY.zQBWAV/Tb.YujRBLafbvxYQOvj9z2Y0Ozi3oG/RIsey	manager	Дмитрий	Нагиев	89252948576	2025-09-26 18:20:36.419	2025-09-26 18:20:36.419
 14	theMaid1@mail.ru	$2b$12$qHTDp0SCbZqybP8bRBcFv.HOXeEIsHVILtdtPXao9KqsCy18hmtYe	maid	Лида	Петровна	89251286593	2025-09-26 18:21:49.953	2025-09-26 18:21:49.953
-6	admin1@mail.ru	$2b$12$kNX0Bg/BzP3dRbapS4MW9OvSLfuo6/B/Upv/BCoFX36bJUaKvycKK	admin	Rasul	Aliev	89253457684	2025-09-26 17:38:42.695	2026-02-26 12:10:38.884
+12	guest2@mail.ru	$2b$12$8Sj4b1YVq47MvJUX31SQ3.Cpo3.BUrHMsHFzFnfsZ/UtTNHfNlKYm	guest	Ахмад	Магомедов	89253428694	2025-09-26 18:19:35.582	2026-05-14 13:59:20.909
+6	admin1@mail.ru	$2b$12$kNX0Bg/BzP3dRbapS4MW9OvSLfuo6/B/Upv/BCoFX36bJUaKvycKK	admin	Rasul	Aliev	89253457685	2025-09-26 17:38:42.695	2026-05-14 15:56:39.512
 \.
 
 
@@ -431,7 +431,7 @@ COPY public.users (id, email, password_hash, role, first_name, last_name, phone_
 -- Name: bookings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.bookings_id_seq', 225, true);
+SELECT pg_catalog.setval('public.bookings_id_seq', 240, true);
 
 
 --
@@ -466,7 +466,7 @@ SELECT pg_catalog.setval('public.rooms_id_seq', 36, true);
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 20, true);
+SELECT pg_catalog.setval('public.users_id_seq', 21, true);
 
 
 --
@@ -606,5 +606,5 @@ ALTER TABLE ONLY public.rooms
 -- PostgreSQL database dump complete
 --
 
-\unrestrict wdVocZbRbG9b5GlbHFwjtujFrxxmMg4ExQf2U0N4ISnaqO6tmOC7XJG6sXu88Mh
+\unrestrict ayr5vOOPZITILcebivpHdjHkbshViXjN75ehFGoID5Dozma6e1hbU309WK0vxZP
 
