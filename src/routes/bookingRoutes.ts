@@ -12,6 +12,7 @@ router.post("/create", authenticateToken, validate(bookingCreateSchema), createB
 // GET /api/bookings/my - получение бронирований текущего пользователя
 router.get("/my", authenticateToken, getUserBookings)
 
+// DELETE /api/bookings/delete - удаление выбранного бронирования
 router.delete("/delete", authenticateToken, deleteUserBooking)
 
 export default router

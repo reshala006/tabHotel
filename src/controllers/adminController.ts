@@ -55,6 +55,7 @@ export const getAllBookings = async (req: AuthRequest, res: Response): Promise<v
                 lastName: booking.guest.last_name,
                 phoneNumber: booking.guest.phone_number,
             },
+            guestData: booking.guest_data,
             createdAt: booking.created_at,
         }))
 
@@ -97,18 +98,6 @@ export const updateBookingStatus = async (req: AuthRequest, res: Response): Prom
                 },
             },
         })
-
-        // if (status === "checked_in") {
-        //     await prisma.room.update({
-        //         where: { id: booking.room_id },
-        //         data: { status: "occupied" },
-        //     })
-        // } else if (status === "checked_out" || status === "cancelled") {
-        //     await prisma.room.update({
-        //         where: { id: booking.room_id },
-        //         data: { status: "available" },
-        //     })
-        // }
 
         if (status === "confirmed") {
             await prisma.room.update({
@@ -234,6 +223,158 @@ export const getDashboardStats = async (req: AuthRequest, res: Response): Promis
         res.status(200).json(stats)
     } catch (error) {
         console.error("Get dashboard stats error:", error)
+        res.status(500).json({ message: "Internal server error" })
+    }
+}
+
+export const getAllUsers = async (req: AuthRequest, res: Response): Promise<void> => {
+    try {
+        const users = await prisma.user.findMany({
+            select: {
+                id: true,
+                email: true,
+                first_name: true,
+                last_name: true,
+                phone_number: true,
+                role: true,
+                created_at: true,
+                updated_at: true,
+            },
+            orderBy: { created_at: "desc" },
+        })
+
+        const response = users.map((user) => ({
+            id: user.id,
+            email: user.email,
+            firstName: user.first_name,
+            lastName: user.last_name,
+            phoneNumber: user.phone_number,
+            role: user.role,
+            createdAt: user.created_at,
+            updatedAt: user.updated_at,
+        }))
+
+        res.status(200).json(response)
+    } catch (error) {
+        console.error("Get all users error:", error)
+        res.status(500).json({ message: "Internal server error" })
+    }
+}
+
+export const updateUser = async (req: AuthRequest, res: Response): Promise<void> => {
+    try {
+        const userId = parseInt(req.params.id)
+        const { email, first_name, last_name, phone_number, role } = req.body as {
+            email?: string
+            first_name?: string
+            last_name?: string
+            phone_number?: string
+            role?: string
+        }
+
+        // Проверяем, существует ли пользователь
+        const existingUser = await prisma.user.findUnique({
+            where: { id: userId },
+        })
+
+        if (!existingUser) {
+            res.status(404).json({ message: "User not found" })
+            return
+        }
+
+        // Проверяем, не занят ли email другим пользователем
+        if (email && email !== existingUser.email) {
+            const emailExists = await prisma.user.findUnique({
+                where: { email },
+            })
+            if (emailExists) {
+                res.status(400).json({ message: "Email already in use" })
+                return
+            }
+        }
+
+        // Валидация роли - ОБНОВЛЕННЫЙ МАССИВ
+        const validRoles = ["admin", "receptionist", "guest", "manager", "maid"]
+        if (role && !validRoles.includes(role)) {
+            res.status(400).json({ message: "Invalid role. Must be admin, receptionist, guest, manager, or maid" })
+            return
+        }
+
+        // Обновляем пользователя
+        const updatedUser = await prisma.user.update({
+            where: { id: userId },
+            data: {
+                ...(email && { email }),
+                ...(first_name && { first_name }),
+                ...(last_name && { last_name }),
+                ...(phone_number && { phone_number }),
+                ...(role && { role }),
+                updated_at: new Date(),
+            },
+            select: {
+                id: true,
+                email: true,
+                first_name: true,
+                last_name: true,
+                phone_number: true,
+                role: true,
+                created_at: true,
+                updated_at: true,
+            },
+        })
+
+        const response = {
+            id: updatedUser.id,
+            email: updatedUser.email,
+            firstName: updatedUser.first_name,
+            lastName: updatedUser.last_name,
+            phoneNumber: updatedUser.phone_number,
+            role: updatedUser.role,
+            createdAt: updatedUser.created_at,
+            updatedAt: updatedUser.updated_at,
+        }
+
+        res.status(200).json(response)
+    } catch (error) {
+        console.error("Update user error:", error)
+        res.status(500).json({ message: "Internal server error" })
+    }
+}
+
+export const deleteUser = async (req: AuthRequest, res: Response): Promise<void> => {
+    try {
+        const userId = parseInt(req.params.id)
+
+        const existingUser = await prisma.user.findUnique({
+            where: { id: userId },
+            include: {
+                bookings: true,
+            },
+        })
+
+        if (!existingUser) {
+            res.status(404).json({ message: "User not found" })
+            return
+        }
+
+        const hasActiveBookings = existingUser.bookings.some(
+            (booking) => booking.status !== "cancelled" && booking.status !== "checked_out",
+        )
+
+        if (hasActiveBookings) {
+            res.status(400).json({
+                message: "Cannot delete user with active bookings. Cancel or complete bookings first.",
+            })
+            return
+        }
+
+        await prisma.user.delete({
+            where: { id: userId },
+        })
+
+        res.status(200).json({ message: "User deleted successfully" })
+    } catch (error) {
+        console.error("Delete user error:", error)
         res.status(500).json({ message: "Internal server error" })
     }
 }

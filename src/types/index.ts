@@ -104,3 +104,14 @@ export interface AvailabilityCheckRequest {
     priceFrom?: number
     priceTo?: number
 }
+
+export interface ManagerBookingCreateRequest {
+    roomTypeId: number
+    checkInDate: string
+    checkOutDate: string
+    guestData: {
+        firstName: string
+        lastName: string
+        phoneNumber?: string
+    }
+}
