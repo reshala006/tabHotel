@@ -1,4 +1,6 @@
-const defaultPath = "/assets/images/media/"
+import telegram from "@assets/images/media/telegram.png"
+import whatsapp from "@assets/images/media/whatsapp.png"
+import x from "@assets/images/media/x.png"
 
 type mediaData = {
     src: string
@@ -8,17 +10,17 @@ type mediaData = {
 
 const media: mediaData[] = [
     {
-        src: defaultPath + "telegram.png",
+        src: telegram,
         name: "telegram",
         ref: "/none",
     },
     {
-        src: defaultPath + "whatsapp.png",
+        src: whatsapp,
         name: "whatsapp",
         ref: "/none",
     },
     {
-        src: defaultPath + "x.png",
+        src: x,
         name: "x",
         ref: "/none",
     },

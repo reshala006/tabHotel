@@ -1,6 +1,9 @@
 import "./Footer.css"
 import media from "@/constants/media"
 import tabHotelLogo from "@assets/images/tabHotelLogo.svg"
+import footerBg from "@assets/images/footer/footer.png"
+import footerStone from "@assets/images/footer/footer-stone.png"
+
 import { hotelData } from "@/constants/values"
 import { Link } from "react-router-dom"
 
@@ -12,14 +15,15 @@ function Footer() {
                 <h1>ждем вас</h1>
             </div>
 
-            <div className="footer__ref" style={{ backgroundImage: `url("/assets/images/footer/footer.png")` }}>
+            <div className="footer__ref" style={{ backgroundImage: `url(${footerBg})` }}>
                 <button
                     className="footer__ref__server"
-                    style={{ backgroundImage: "url(/assets/images/footer/footer-stone.png)" }}
+                    style={{ backgroundImage: `url(${footerStone})` }}
                     onClick={() => navigator.clipboard.writeText(hotelData.coordinates)}
                 >
                     {hotelData.address + " " + hotelData.coordinates}
                 </button>
+
                 <div className="footer__ref__media">
                     {media.map((value, index) => (
                         <Link key={index} to={value.ref}>
