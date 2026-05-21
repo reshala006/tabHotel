@@ -1,4 +1,4 @@
-const defaultPath = "src/assets/images/media/"
+const defaultPath = "/assets/images/media/"
 
 type mediaData = {
     src: string

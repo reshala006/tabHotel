@@ -1,4 +1,4 @@
-const defaultPath = "src/assets/images/slider/"
+const defaultPath = "/assets/images/slider/"
 
 type container = {
     img: string
